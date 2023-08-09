@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='timeseries_qmc',
@@ -8,7 +8,7 @@ setup(
     author='Quantinuum GmbH',
     author_email='khaldoon.ghanem@quantinuum.com',
     license='Apache License 2.0',
-    packages=['timeseries_qmc'],
+    packages=find_packages(),
     install_requires=['numpy',
                       'scipy',
                       'pytket',
