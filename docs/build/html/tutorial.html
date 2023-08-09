@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial &mdash; TimeseriesQMC 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/jupyter-sphinx.css" type="text/css" />
+      <link rel="stylesheet" href="_static/thebelab.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script src="_static/thebelab-helper.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="prev" title="Installation" href="install.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            TimeseriesQMC
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#models">Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#loschmidt-echos">Loschmidt Echos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#boltzmann-weights">Boltzmann Weights</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#monte-carlo-sampling">Monte Carlo Sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#error-mitigation">Error Mitigation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#log-messages">Log Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">TimeseriesQMC</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/tutorial.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this heading"></a></h1>
+<section id="models">
+<h2>Models<a class="headerlink" href="#models" title="Permalink to this heading"></a></h2>
+<p>The starting point for any calculations is specifying the model Hamiltonian via one of the
+<a class="reference internal" href="timeseries_qmc.models.html#models"><span class="std std-ref">Model classes</span></a>.
+For exampling, one can create a Transverse-field Ising model on a 4-sites ring as following:</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">timeseries_qmc</span> <span class="k">as</span> <span class="nn">ts</span>
+
+<span class="n">L</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1">#Number of sites</span>
+<span class="n">coupuling_list</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span> <span class="c1"># Connectivity of sites</span>
+<span class="n">Jzz</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="c1"># Strength of Coupling</span>
+<span class="n">hx</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="c1"># Strength of field</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Ising</span><span class="o">.</span><span class="n">from_coupling_list</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">coupuling_list</span><span class="p">,</span> <span class="n">Jzz</span><span class="p">,</span>  <span class="n">hx</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+</pre></div>
+</div>
+</div>
+</div>
+<p>The parameter <code class="docutils literal notranslate"><span class="pre">coupuling_list</span></code> is a list of lists specifying how the lattice sites are connected.
+Alternatively, one can use <a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.models.lattice.Lattice.html#tenpy.models.lattice.Lattice" title="(in TeNPy v0.10.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tenpy.models.lattice.Lattice</span></code></a> as a convenient shortcut.
+For example, the following code creates a 3x3 square lattice:</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">timeseries_qmc</span> <span class="k">as</span> <span class="nn">ts</span>
+<span class="kn">from</span> <span class="nn">tenpy.models</span> <span class="kn">import</span> <span class="n">lattice</span>
+
+<span class="n">lattice</span> <span class="o">=</span> <span class="n">lattice</span><span class="o">.</span><span class="n">Square</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">bc</span><span class="o">=</span><span class="s1">&#39;periodic&#39;</span><span class="p">)</span>
+<span class="n">Jzz</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="c1"># Strength of Coupling</span>
+<span class="n">hx</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="c1"># Strength of field</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Ising</span><span class="o">.</span><span class="n">from_lattice</span><span class="p">(</span><span class="n">lattice</span><span class="p">,</span> <span class="n">Jzz</span><span class="p">,</span> <span class="n">hx</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>The <a class="reference internal" href="timeseries_qmc.models.html#timeseries_qmc.models.Model" title="timeseries_qmc.models.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a> class is the basic building block and contains several methods that are
+employed by other classes in the package.
+For the sake of benchmarking later, you can directly calculate some thermal observables via exact diagonalization when
+the system size is small</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">beta</span> <span class="o">=</span> <span class="mf">0.3</span> <span class="c1"># Inverse temperature</span>
+<span class="n">M2</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">E2</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">calc_thermal_observables</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span> <span class="c1"># Calculates: Manetization^2, Energy, Energy^2</span>
+
+<span class="n">Cv</span><span class="o">=</span><span class="p">(</span><span class="n">E2</span><span class="o">-</span><span class="n">E</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">beta</span><span class="o">**</span><span class="mi">2</span> <span class="c1"># Specific heat</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Magnetizaiton: </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">M2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Specific Heat: </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Cv</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Magnetizaiton: 0.474
+Specific Heat: 3.866
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="loschmidt-echos">
+<h2>Loschmidt Echos<a class="headerlink" href="#loschmidt-echos" title="Permalink to this heading"></a></h2>
+<p>Given a model, we next would like to evalute the Loschmidt echos of its product states.
+This is achieved via one of the <a class="reference internal" href="timeseries_qmc.loschmidt.html#loschmidt"><span class="std std-ref">Loschmidt echo evaluators</span></a>.
+The most accurate would be to use <a class="reference internal" href="timeseries_qmc.loschmidt.html#timeseries_qmc.loschmidt.ExactLoschmidtEcho" title="timeseries_qmc.loschmidt.ExactLoschmidtEcho"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExactLoschmidtEcho</span></code></a>.
+This performs the exact time evoluation using <a class="reference external" href="https://quspin.github.io/QuSpin/">QuSpin package</a> under the hood.
+One can also check the effect of Trotterization by using <a class="reference internal" href="timeseries_qmc.loschmidt.html#timeseries_qmc.loschmidt.TrotterizedLoschmidtEcho" title="timeseries_qmc.loschmidt.TrotterizedLoschmidtEcho"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrotterizedLoschmidtEcho</span></code></a>.</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">n_t</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1"># Number of time points</span>
+<span class="n">t_max</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="c1"># Maximum time</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="n">t_max</span><span class="o">/</span><span class="n">n_t</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">t_max</span><span class="p">,</span> <span class="n">n_t</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># Points at which to evaluate Loschmidt echos</span>
+<span class="n">psi</span> <span class="o">=</span>  <span class="n">model</span><span class="o">.</span><span class="n">n_qbits</span><span class="o">*</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># Product state for which to evaluate Loschmidt echos</span>
+
+<span class="n">exact_loschmidt</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">loschmidt</span><span class="o">.</span><span class="n">ExactLoschmidtEcho</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">trotterized_loschmidt</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">loschmidt</span><span class="o">.</span><span class="n">TrotterizedLoschmidtEcho</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">trotter_order</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dt_trotter</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+
+<span class="n">G_exact</span><span class="p">,</span><span class="n">_</span>  <span class="o">=</span> <span class="n">exact_loschmidt</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="n">G_trotter</span><span class="p">,</span><span class="n">_</span>  <span class="o">=</span> <span class="n">trotterized_loschmidt</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">G_exact</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Exact&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">G_trotter</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Trotterized&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Re[G(t)]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">G_exact</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Exact&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">G_trotter</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Trotterized&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Im[G(t)]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/tutorial_3_0.png" src="_images/tutorial_3_0.png" />
+<img alt="_images/tutorial_3_1.png" src="_images/tutorial_3_1.png" />
+</div>
+</div>
+<p>More interestingly and more relevant would be to evaluate Loschmidt echo using quantum circuits.
+There are currently two evaluators: <a class="reference internal" href="timeseries_qmc.loschmidt.html#timeseries_qmc.loschmidt.Hadamard" title="timeseries_qmc.loschmidt.Hadamard"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hadamard</span></code></a> and
+<a class="reference internal" href="timeseries_qmc.loschmidt.html#timeseries_qmc.loschmidt.Catstate" title="timeseries_qmc.loschmidt.Catstate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Catstate</span></code></a>.
+The first uses the <a class="reference external" href="https://en.wikipedia.org/wiki/Hadamard_test_(quantum_computation)">Hadamard test</a> and is
+applicable to any model, while the second uses the Catstate trick <a class="footnote-reference brackets" href="#footcite-lu2021" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> and is applicable to models
+where the product state <span class="math notranslate nohighlight">\(|0\dots0\rangle\)</span> is an eigenstate of the Trotterized Hamiltonian e.g.
+<a class="reference internal" href="timeseries_qmc.models.html#timeseries_qmc.models.HeisenbergBonded" title="timeseries_qmc.models.HeisenbergBonded"><code class="xref py py-class docutils literal notranslate"><span class="pre">HeisenbergBonded</span></code></a>. Both these evaluators need a <a class="reference external" href="https://cqcl.github.io/tket/pytket/api/backends.html#pytket.backends.Backend" title="(in pytket v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytket.backends.backend.Backend</span></code></a> for running
+the quantum circuits. Optionally, you can aslo provide via the parameter <code class="docutils literal notranslate"><span class="pre">cache_directroy</span></code> a path for a folder where
+compiled circuits, job handles and shots are stored. This is useful for saving intermidiate results and avoid rerunning
+costly circuits.</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pytket.extensions.qiskit</span> <span class="kn">import</span> <span class="n">AerBackend</span>
+
+<span class="n">backend</span> <span class="o">=</span> <span class="n">AerBackend</span><span class="p">()</span>
+<span class="n">hadmard_loschmidt</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">loschmidt</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">n_shots</span> <span class="o">=</span> <span class="mi">256</span><span class="p">,</span> <span class="n">cache_directory</span><span class="o">=</span><span class="s1">&#39;tutorial_data&#39;</span><span class="p">,</span> <span class="n">dt_trotter</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">G_aer</span><span class="p">,</span> <span class="n">G_aer_err</span>  <span class="o">=</span> <span class="n">hadmard_loschmidt</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">G_exact</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Exact&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">G_trotter</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Trotterized&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">G_aer</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">G_aer_err</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Aer&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Re[G(t)]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/tutorial_4_0.png" src="_images/tutorial_4_0.png" />
+</div>
+</div>
+</section>
+<section id="boltzmann-weights">
+<h2>Boltzmann Weights<a class="headerlink" href="#boltzmann-weights" title="Permalink to this heading"></a></h2>
+<p>Calculating Boltzmann weights (and the local energy moments) is done using
+<a class="reference internal" href="timeseries_qmc.boltzmann.html#boltzmann"><span class="std std-ref">Boltzmann weight calculators</span></a>.
+The two calculators <a class="reference internal" href="timeseries_qmc.boltzmann.html#timeseries_qmc.boltzmann.FourierTransform" title="timeseries_qmc.boltzmann.FourierTransform"><code class="xref py py-class docutils literal notranslate"><span class="pre">FourierTransform</span></code></a> and <a class="reference internal" href="timeseries_qmc.boltzmann.html#timeseries_qmc.boltzmann.NNLS" title="timeseries_qmc.boltzmann.NNLS"><code class="xref py py-class docutils literal notranslate"><span class="pre">NNLS</span></code></a> allows extracting these quanties from a time series of
+Loschmidt echos via Wick’s rotation. <a class="footnote-reference brackets" href="#footcite-ghanem2023" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>
+Additionally, for benchmarking purposes, <code class="xref py py-class docutils literal notranslate"><span class="pre">ExactBoltzmannWeight</span></code> allows calculating these quantities exactly
+via QuSpin.
+The use of <a class="reference internal" href="timeseries_qmc.boltzmann.html#timeseries_qmc.boltzmann.NNLS" title="timeseries_qmc.boltzmann.NNLS"><code class="xref py py-class docutils literal notranslate"><span class="pre">NNLS</span></code></a> is recommended.</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">exact_boltzmann</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">boltzmann</span><span class="o">.</span><span class="n">ExactBoltzmannWeight</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
+<span class="n">fourier_boltzmann</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">boltzmann</span><span class="o">.</span><span class="n">FourierTransform</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">exact_loschmidt</span><span class="p">,</span> <span class="n">t_max</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">n_t</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">nnls_boltzmann</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">boltzmann</span><span class="o">.</span><span class="n">NNLS</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">exact_loschmidt</span><span class="p">,</span> <span class="n">t_max</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">n_t</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+
+<span class="n">exact_weight</span><span class="p">,</span> <span class="n">exact_e</span><span class="p">,</span> <span class="n">exact_e2</span> <span class="o">=</span> <span class="n">exact_boltzmann</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span>
+<span class="n">fourier_weight</span><span class="p">,</span> <span class="n">fourier_e</span><span class="p">,</span> <span class="n">fourier_e2</span> <span class="o">=</span> <span class="n">fourier_boltzmann</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span>
+<span class="n">nnls_weight</span><span class="p">,</span> <span class="n">nnls_e</span><span class="p">,</span> <span class="n">nnls_e2</span> <span class="o">=</span> <span class="n">nnls_boltzmann</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Boltzmann Weight - Exact   : </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exact_weight</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Boltzmann Weight - Fourier : </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fourier_weight</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Boltzmann Weight - NNLS    : </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nnls_weight</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Boltzmann Weight - Exact   : 272.950
+Boltzmann Weight - Fourier : 319.610
+Boltzmann Weight - NNLS    : 272.963
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="monte-carlo-sampling">
+<h2>Monte Carlo Sampling<a class="headerlink" href="#monte-carlo-sampling" title="Permalink to this heading"></a></h2>
+<p>In order to generate samples via time-series QMC, we need a <a class="reference internal" href="timeseries_qmc.sampling.html#timeseries_qmc.sampling.MarkovChain" title="timeseries_qmc.sampling.MarkovChain"><code class="xref py py-class docutils literal notranslate"><span class="pre">MarkovChain</span></code></a> object.
+This requries a <a class="reference internal" href="timeseries_qmc.boltzmann.html#timeseries_qmc.boltzmann.BoltzmannWeightCalculator" title="timeseries_qmc.boltzmann.BoltzmannWeightCalculator"><code class="xref py py-class docutils literal notranslate"><span class="pre">BoltzmannWeightCalculator</span></code></a>, which was disucssed earlier, and one of the
+<a class="reference internal" href="timeseries_qmc.sampling.html#sampling"><span class="std std-ref">samplers</span></a>, which is used to propose samples.
+The efficeincy/correlation of the Markov chain will depend on the choosen sampler.
+The use of <a class="reference internal" href="timeseries_qmc.sampling.html#timeseries_qmc.sampling.ClusterUpdate" title="timeseries_qmc.sampling.ClusterUpdate"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClusterUpdate</span></code></a> is recommended over <a class="reference internal" href="timeseries_qmc.sampling.html#timeseries_qmc.sampling.SingleFlip" title="timeseries_qmc.sampling.SingleFlip"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleFlip</span></code></a>.
+For anti-ferromagnetic models on Kagome lattices, <code class="xref py py-class docutils literal notranslate"><span class="pre">kagomeClusterUpdate</span></code> is recommended.</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sampler</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">sampling</span><span class="o">.</span><span class="n">ClusterUpdate</span><span class="p">(</span><span class="n">Jzz</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">lattice</span><span class="o">=</span><span class="n">lattice</span><span class="p">)</span>
+<span class="n">rng_seed</span> <span class="o">=</span> <span class="mi">32</span> <span class="c1"># Seed for random number generation</span>
+<span class="n">initial_sample</span> <span class="o">=</span> <span class="n">psi</span> <span class="c1"># Starting state</span>
+<span class="n">chain</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">sampling</span><span class="o">.</span><span class="n">MarkovChain</span><span class="p">(</span><span class="n">exact_boltzmann</span><span class="p">,</span> <span class="n">sampler</span><span class="p">,</span> <span class="n">initial_sample</span><span class="p">,</span> <span class="n">rng_seed</span><span class="p">)</span>
+<span class="n">n_samples</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_samples</span><span class="p">):</span>
+    <span class="n">chain</span><span class="o">.</span><span class="n">generate_next_sample</span><span class="p">()</span>
+    <span class="k">if</span><span class="p">((</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="k">10</span>==0):
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sample #</span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">chain</span><span class="o">.</span><span class="n">current_sample</span><span class="p">))</span>
+
+<span class="n">mag_vals</span> <span class="o">=</span> <span class="n">chain</span><span class="o">.</span><span class="n">get_magnetziations_squared</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Average Magnetizaiton: </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">mag_vals</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Sample #10: [1 0 1 1 0 1 1 1 1]
+Sample #20: [0 0 0 0 0 0 0 0 0]
+Sample #30: [1 0 0 1 1 1 1 1 1]
+Sample #40: [1 1 1 1 0 1 1 1 1]
+Sample #50: [0 0 0 1 0 0 0 0 0]
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Sample #60: [0 1 1 0 1 1 1 1 0]
+Sample #70: [1 1 1 1 1 1 1 1 1]
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Sample #80: [0 1 1 1 1 1 1 0 1]
+Sample #90: [0 0 0 0 0 0 0 0 0]
+Sample #100: [1 1 1 1 0 1 1 1 1]
+
+Average Magnetizaiton: 0.497
+</pre></div>
+</div>
+</div>
+</div>
+<p><a class="reference internal" href="timeseries_qmc.sampling.html#timeseries_qmc.sampling.MarkovChain" title="timeseries_qmc.sampling.MarkovChain"><code class="xref py py-class docutils literal notranslate"><span class="pre">MarkovChain</span></code></a> class allows saving itself to a file. This can be done at the end of sampling or periodically in
+order to be able to retreive partial results when something goes wrong.
+A simpler approach would be to use the function <code class="xref py py-func docutils literal notranslate"><span class="pre">generate_chain()</span></code>.
+The functions takes as input the desrired number of samples and the path where the chain is stored.
+The chain is attempted to be loaded from the file and the sampling continues till the specified number of samples is
+reached. Also the chain is automatically saved after each sample is generated.</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">chains</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">samples_num_per_chain</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">chains_num</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="k">for</span> <span class="n">rng_seed</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">chains_num</span><span class="p">):</span>
+    <span class="n">chain_filename</span> <span class="o">=</span> <span class="s2">&quot;./tutorial_data/chain_&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">rng_seed</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;.pickle&quot;</span>
+    <span class="n">chain</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">sampling</span><span class="o">.</span><span class="n">generate_chain</span><span class="p">(</span><span class="n">exact_boltzmann</span><span class="p">,</span> <span class="n">sampler</span><span class="p">,</span> <span class="n">initial_sample</span><span class="p">,</span>
+                            <span class="n">rng_seed</span><span class="p">,</span> <span class="n">samples_num_per_chain</span><span class="p">,</span> <span class="n">chain_filename</span><span class="p">)</span>
+    <span class="n">chains</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chain</span><span class="p">)</span>
+
+<span class="n">num_burned_samples</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">used_samples</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_burned_samples</span><span class="p">,</span> <span class="n">samples_num_per_chain</span><span class="p">))</span>
+<span class="n">chains_estimates</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">chain</span> <span class="ow">in</span> <span class="n">chains</span><span class="p">:</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">chain</span><span class="o">.</span><span class="n">get_magnetziations_squared</span><span class="p">()[</span><span class="n">used_samples</span><span class="p">]</span>
+    <span class="n">cum_means</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">values</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">used_samples</span><span class="p">,</span> <span class="n">cum_means</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">chain_estimate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">chains_estimates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chain_estimate</span><span class="p">)</span>
+
+<span class="n">chains_estimates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">chains_estimates</span><span class="p">)</span>
+<span class="n">estimate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">chains_estimates</span><span class="p">)</span>
+<span class="n">error</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">chains_estimates</span><span class="p">)</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">chains_num</span><span class="p">)</span> <span class="c1">#Two standard deviations - 95% condfidence</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="n">xmin</span><span class="o">=</span><span class="n">used_samples</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xmax</span><span class="o">=</span><span class="n">used_samples</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">M2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Exact&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="n">xmin</span><span class="o">=</span><span class="n">used_samples</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xmax</span><span class="o">=</span><span class="n">used_samples</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">estimate</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Estimate&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">used_samples</span><span class="p">,</span> <span class="n">estimate</span><span class="o">-</span><span class="n">error</span><span class="p">,</span> <span class="n">estimate</span><span class="o">+</span><span class="n">error</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;95% Confidence&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$M^2$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Iteration&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/tutorial_7_0.png" src="_images/tutorial_7_0.png" />
+</div>
+</div>
+</section>
+<section id="error-mitigation">
+<h2>Error Mitigation<a class="headerlink" href="#error-mitigation" title="Permalink to this heading"></a></h2>
+<p>When obtaining Loschmidt echos by running quantum circuits on real quantum computers, hardware noise is inevitable.
+We provide two simple error mitgation stratigies, depending on the way Loschmidt echos are calculated.
+For the Hadamard test, we mitigate the effect of depolarizing noise by rescaling the measured Loschmidt echos by
+a factor related to the fidelity of the quantum gates and the number of those gates in the circuit.
+This will be done automatically by passing <a class="reference internal" href="timeseries_qmc.mitigation.html#timeseries_qmc.mitigation.FidelityEstimator" title="timeseries_qmc.mitigation.FidelityEstimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">FidelityEstimator</span></code></a> as a parameter to  <a class="reference internal" href="timeseries_qmc.loschmidt.html#timeseries_qmc.loschmidt.Hadamard" title="timeseries_qmc.loschmidt.Hadamard"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hadamard</span></code></a>.
+For the catestate trick, we mitigate the effect of noise by filter the shots which violate the symmetry of the
+Hamiltonian. Filtering these shots is achieved by passing <a class="reference internal" href="timeseries_qmc.mitigation.html#timeseries_qmc.mitigation.SymmetryFilter" title="timeseries_qmc.mitigation.SymmetryFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymmetryFilter</span></code></a> as a parameter to <a class="reference internal" href="timeseries_qmc.loschmidt.html#timeseries_qmc.loschmidt.Catstate" title="timeseries_qmc.loschmidt.Catstate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Catstate</span></code></a>.</p>
+</section>
+<section id="log-messages">
+<h2>Log Messages<a class="headerlink" href="#log-messages" title="Permalink to this heading"></a></h2>
+<p>TimeseriesQMC package print some log messages that can be helpful to keep track of the current status of sampling and
+the compiliation and running of quantum circuits. To activate logging simply call the function
+<a class="reference internal" href="timeseries_qmc.utils.html#timeseries_qmc.utils.configure_logging" title="timeseries_qmc.utils.configure_logging"><code class="xref py py-func docutils literal notranslate"><span class="pre">configure_logging()</span></code></a> which accepts as parameters the path to the log file and whetehr log messages should also be
+printted to the standard output.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading"></a></h2>
+<div class="docutils container" id="id3">
+<aside class="footnote brackets" id="footcite-lu2021" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Sirui Lu, Mari Carmen Bañuls, and J. Ignacio Cirac. Algorithms for quantum simulation at finite energies. <em>PRX Quantum</em>, 2:020321, May 2021. <a class="reference external" href="https://doi.org/10.1103/PRXQuantum.2.020321">doi:10.1103/PRXQuantum.2.020321</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-ghanem2023" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Khaldoon Ghanem, Alexander Schuckert, and Henrik Dreyer. Robust extraction of thermal observables from state sampling and real-time dynamics on quantum computers. 2023. <a class="reference external" href="https://arxiv.org/abs/2305.19322">arXiv:2305.19322</a>.</p>
+</aside>
+</aside>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="install.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Quantinuum GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

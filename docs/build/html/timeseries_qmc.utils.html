@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>timeseries_qmc.utils &mdash; TimeseriesQMC 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/jupyter-sphinx.css" type="text/css" />
+      <link rel="stylesheet" href="_static/thebelab.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script src="_static/thebelab-helper.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="timeseries_qmc.sampling" href="timeseries_qmc.sampling.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            TimeseriesQMC
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.boltzmann.html">timeseries_qmc.boltzmann</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.loschmidt.html">timeseries_qmc.loschmidt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.mitigation.html">timeseries_qmc.mitigation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.models.html">timeseries_qmc.models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.sampling.html">timeseries_qmc.sampling</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">timeseries_qmc.utils</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.utils.bitstring_to_circuit"><code class="docutils literal notranslate"><span class="pre">bitstring_to_circuit()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.utils.bitstring_to_int"><code class="docutils literal notranslate"><span class="pre">bitstring_to_int()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.utils.bitstring_to_state"><code class="docutils literal notranslate"><span class="pre">bitstring_to_state()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.utils.configure_logging"><code class="docutils literal notranslate"><span class="pre">configure_logging()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.utils.get_adjacency_list"><code class="docutils literal notranslate"><span class="pre">get_adjacency_list()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.utils.get_coupling_list"><code class="docutils literal notranslate"><span class="pre">get_coupling_list()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.utils.get_kagome_triangles"><code class="docutils literal notranslate"><span class="pre">get_kagome_triangles()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.utils.get_parallel_couplings"><code class="docutils literal notranslate"><span class="pre">get_parallel_couplings()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.utils.int_to_bitstring"><code class="docutils literal notranslate"><span class="pre">int_to_bitstring()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">TimeseriesQMC</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="api.html">API Documentation</a></li>
+      <li class="breadcrumb-item active">timeseries_qmc.utils</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/timeseries_qmc.utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-timeseries_qmc.utils">
+<span id="timeseries-qmc-utils"></span><h1>timeseries_qmc.utils<a class="headerlink" href="#module-timeseries_qmc.utils" title="Permalink to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="timeseries_qmc.utils.bitstring_to_circuit">
+<span class="sig-prename descclassname"><span class="pre">timeseries_qmc.utils.</span></span><span class="sig-name descname"><span class="pre">bitstring_to_circuit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bitstring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><span class="pre">Circuit</span></a></span></span><a class="headerlink" href="#timeseries_qmc.utils.bitstring_to_circuit" title="Permalink to this definition"></a></dt>
+<dd><p>Return a <a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytket.Circuit</span></code></a> that transforms the <span class="math notranslate nohighlight">\(|0\dots0\rangle\)</span>
+state into the product state specified by a bitstring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>psi_bitstring</strong> (list or <a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – List/array of zeros and ones.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="timeseries_qmc.utils.bitstring_to_int">
+<span class="sig-prename descclassname"><span class="pre">timeseries_qmc.utils.</span></span><span class="sig-name descname"><span class="pre">bitstring_to_int</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bitstring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#timeseries_qmc.utils.bitstring_to_int" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the integer represented by a bitstring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>psi_bitstring</strong> (list or <a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – List/array of zeros and ones.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="timeseries_qmc.utils.bitstring_to_state">
+<span class="sig-prename descclassname"><span class="pre">timeseries_qmc.utils.</span></span><span class="sig-name descname"><span class="pre">bitstring_to_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bitstring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></span><a class="headerlink" href="#timeseries_qmc.utils.bitstring_to_state" title="Permalink to this definition"></a></dt>
+<dd><p>Return an array that contains all zeros except a single one located at the index
+specified by a bitstring. For example, for input <code class="docutils literal notranslate"><span class="pre">[0,0]</span></code> the output is <code class="docutils literal notranslate"><span class="pre">np.array([1,0,0,0])</span></code>,
+and for input <code class="docutils literal notranslate"><span class="pre">[0,1]</span></code> the output is <code class="docutils literal notranslate"><span class="pre">np.array([0,0,1,0])</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>psi_bitstring</strong> (list or <a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – List/array of zeros and ones.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="timeseries_qmc.utils.configure_logging">
+<span class="sig-prename descclassname"><span class="pre">timeseries_qmc.utils.</span></span><span class="sig-name descname"><span class="pre">configure_logging</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logfile_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">console</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.utils.configure_logging" title="Permalink to this definition"></a></dt>
+<dd><p>Configure the loggers of the package.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>logfile_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Path to the logfile. Parent directories are creadted if necessary.
+Value <code class="docutils literal notranslate"><span class="pre">None</span></code> can be used to disable the output to a logfile.</p></li>
+<li><p><strong>console</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to print log messages to console.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="timeseries_qmc.utils.get_adjacency_list">
+<span class="sig-prename descclassname"><span class="pre">timeseries_qmc.utils.</span></span><span class="sig-name descname"><span class="pre">get_adjacency_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coupling_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#timeseries_qmc.utils.get_adjacency_list" title="Permalink to this definition"></a></dt>
+<dd><p>Return a list of nearest neighbors for each site of the lattice.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>coupling_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of lists specifying the lattice bonds.
+Each list has two integers representing the sites of the bond.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>neighbors_list</strong> – List of lists specifying the neighbors.
+The i-th list contains all neighbors of site i.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="timeseries_qmc.utils.get_coupling_list">
+<span class="sig-prename descclassname"><span class="pre">timeseries_qmc.utils.</span></span><span class="sig-name descname"><span class="pre">get_coupling_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.models.lattice.Lattice.html#tenpy.models.lattice.Lattice" title="(in TeNPy v0.10.0)"><span class="pre">Lattice</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#timeseries_qmc.utils.get_coupling_list" title="Permalink to this definition"></a></dt>
+<dd><p>Get the list of bonds between the different lattice sites.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>lattice</strong> (<a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.models.lattice.Lattice.html#tenpy.models.lattice.Lattice" title="(in TeNPy v0.10.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tenpy.models.lattice.Lattice</span></code></a>) – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>coupling_list</strong> – List of lists specifying the lattice bonds.
+Each list has two integers representing the sites of the bond.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="timeseries_qmc.utils.get_kagome_triangles">
+<span class="sig-prename descclassname"><span class="pre">timeseries_qmc.utils.</span></span><span class="sig-name descname"><span class="pre">get_kagome_triangles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coupling_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#timeseries_qmc.utils.get_kagome_triangles" title="Permalink to this definition"></a></dt>
+<dd><p>Return a list of all triangles in a kagome lattice.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>coupling_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of lists specifying the lattice bonds.
+Each list has two integers representing the sites of the bond.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>triangles_list</strong> – List of lists specifying the triangles.
+Each list has three intergers represnting the vertices of the triangle.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="timeseries_qmc.utils.get_parallel_couplings">
+<span class="sig-prename descclassname"><span class="pre">timeseries_qmc.utils.</span></span><span class="sig-name descname"><span class="pre">get_parallel_couplings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coupling_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#timeseries_qmc.utils.get_parallel_couplings" title="Permalink to this definition"></a></dt>
+<dd><p>Seperate bonds into lists where no two bonds in the same list share a site.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>coupling_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of lists specifying the lattice bonds.
+Each list has two integers representing the sites of the bond.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="timeseries_qmc.utils.int_to_bitstring">
+<span class="sig-prename descclassname"><span class="pre">timeseries_qmc.utils.</span></span><span class="sig-name descname"><span class="pre">int_to_bitstring</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></span><a class="headerlink" href="#timeseries_qmc.utils.int_to_bitstring" title="Permalink to this definition"></a></dt>
+<dd><p>Converts an integer value to an array of bits (ones and zeros).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>val</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Integer value.</p></li>
+<li><p><strong>n_bits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Minimum number of bits that is returned.
+If actual number of necessary bits is less than this number, the list is padded with zero bits.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="timeseries_qmc.sampling.html" class="btn btn-neutral float-left" title="timeseries_qmc.sampling" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Quantinuum GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

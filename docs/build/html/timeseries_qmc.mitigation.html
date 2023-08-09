@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>timeseries_qmc.mitigation &mdash; TimeseriesQMC 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/jupyter-sphinx.css" type="text/css" />
+      <link rel="stylesheet" href="_static/thebelab.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script src="_static/thebelab-helper.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="timeseries_qmc.models" href="timeseries_qmc.models.html" />
+    <link rel="prev" title="timeseries_qmc.loschmidt" href="timeseries_qmc.loschmidt.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            TimeseriesQMC
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.boltzmann.html">timeseries_qmc.boltzmann</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.loschmidt.html">timeseries_qmc.loschmidt</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">timeseries_qmc.mitigation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.mitigation.FidelityEstimator"><code class="docutils literal notranslate"><span class="pre">FidelityEstimator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.mitigation.FidelityEstimator.estimate_fidelity"><code class="docutils literal notranslate"><span class="pre">FidelityEstimator.estimate_fidelity()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.mitigation.ParticleNumberFilter"><code class="docutils literal notranslate"><span class="pre">ParticleNumberFilter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.mitigation.ParticleNumberFilter.has_same_symmetry"><code class="docutils literal notranslate"><span class="pre">ParticleNumberFilter.has_same_symmetry()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.mitigation.SymmetryFilter"><code class="docutils literal notranslate"><span class="pre">SymmetryFilter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.mitigation.SymmetryFilter.estimate_valid_ratio"><code class="docutils literal notranslate"><span class="pre">SymmetryFilter.estimate_valid_ratio()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.mitigation.SymmetryFilter.filter_shots"><code class="docutils literal notranslate"><span class="pre">SymmetryFilter.filter_shots()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.mitigation.SymmetryFilter.has_same_symmetry"><code class="docutils literal notranslate"><span class="pre">SymmetryFilter.has_same_symmetry()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.mitigation.SymmetryFilter.is_valid_shot"><code class="docutils literal notranslate"><span class="pre">SymmetryFilter.is_valid_shot()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.mitigation.TotalSzFilter"><code class="docutils literal notranslate"><span class="pre">TotalSzFilter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.mitigation.TotalSzFilter.has_same_symmetry"><code class="docutils literal notranslate"><span class="pre">TotalSzFilter.has_same_symmetry()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.mitigation.correct_measurment_error"><code class="docutils literal notranslate"><span class="pre">correct_measurment_error()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.models.html">timeseries_qmc.models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.sampling.html">timeseries_qmc.sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.utils.html">timeseries_qmc.utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">TimeseriesQMC</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="api.html">API Documentation</a></li>
+      <li class="breadcrumb-item active">timeseries_qmc.mitigation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/timeseries_qmc.mitigation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="timeseries-qmc-mitigation">
+<h1>timeseries_qmc.mitigation<a class="headerlink" href="#timeseries-qmc-mitigation" title="Permalink to this heading"></a></h1>
+<figure class="align-default" id="id1">
+<div class="graphviz"><object data="_images/inheritance-4892a41e434409c3dc1bcad31243ac64bc3f6e68.svg" type="image/svg+xml" class="inheritance graphviz">
+<p class="warning">Inheritance diagram of timeseries_qmc.mitigation.TotalSzFilter, timeseries_qmc.mitigation.ParticleNumberFilter</p></object></div>
+<figcaption>
+<p><span class="caption-text">Symmetry Filters of Noisy Shots</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<span class="target" id="module-timeseries_qmc.mitigation"></span><dl class="py class">
+<dt class="sig sig-object py" id="timeseries_qmc.mitigation.FidelityEstimator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">timeseries_qmc.mitigation.</span></span><span class="sig-name descname"><span class="pre">FidelityEstimator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.99996</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">F2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.998</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.mitigation.FidelityEstimator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class for estimating the fidelity (aka q-factor) of noisy quantum circuits.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>F1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Fidelity of one-qubit gates.</p></li>
+<li><p><strong>F2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Fidelity of two-qubit gates.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.mitigation.FidelityEstimator.estimate_fidelity">
+<span class="sig-name descname"><span class="pre">estimate_fidelity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><span class="pre">Circuit</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></span><a class="headerlink" href="#timeseries_qmc.mitigation.FidelityEstimator.estimate_fidelity" title="Permalink to this definition"></a></dt>
+<dd><p>Estimate the fidelity of a compiled quantum circuit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>qc</strong> (<a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytket.Circuit</span></code></a>) – Compiled quantum circuit.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Fideility (q-factor) of the circuit.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="timeseries_qmc.mitigation.ParticleNumberFilter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">timeseries_qmc.mitigation.</span></span><span class="sig-name descname"><span class="pre">ParticleNumberFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.mitigation.ParticleNumberFilter" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#timeseries_qmc.mitigation.SymmetryFilter" title="timeseries_qmc.mitigation._symmetry.SymmetryFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymmetryFilter</span></code></a></p>
+<p>Class for filtering shots of the catlike-state circuit that do not conserve the total numbers of spin-up and spin-down electrons.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This filter assumes a Jordan-Wigner transformation where the first half of qubits econdes spin-up
+electrons and the second half encodes spin-down electrons.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>L</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of qubits.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.mitigation.ParticleNumberFilter.has_same_symmetry">
+<span class="sig-name descname"><span class="pre">has_same_symmetry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bit_string1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bit_string2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#timeseries_qmc.mitigation.ParticleNumberFilter.has_same_symmetry" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited method. See <a class="reference internal" href="#timeseries_qmc.mitigation.SymmetryFilter.has_same_symmetry" title="timeseries_qmc.mitigation.SymmetryFilter.has_same_symmetry"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SymmetryFilter.has_same_symmetry()</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="timeseries_qmc.mitigation.SymmetryFilter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">timeseries_qmc.mitigation.</span></span><span class="sig-name descname"><span class="pre">SymmetryFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.mitigation.SymmetryFilter" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
+<p>Abstract base Class for filtering shots of the catlike-state circuit that violate symmetry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>L</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of qubits.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.mitigation.SymmetryFilter.estimate_valid_ratio">
+<span class="sig-name descname"><span class="pre">estimate_valid_ratio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi_bitstring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#timeseries_qmc.mitigation.SymmetryFilter.estimate_valid_ratio" title="Permalink to this definition"></a></dt>
+<dd><p>Estimate the ratio of random product states that violate the symmetry of the catlike-state circuit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>psi_bitstring</strong> (list or <a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – List/array of ones and zeros representation of the psi state which specifies the structure of the
+catlike-state circuit. Default value of <code class="docutils literal notranslate"><span class="pre">None</span></code> corresponds to antiferromagnetic state.</p></li>
+<li><p><strong>samples_count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of generated random product states.</p></li>
+<li><p><strong>log</strong> (<em>boolean</em>) – Whether to assume linear- or logarithmic-depth catlike-state circuit.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.mitigation.SymmetryFilter.filter_shots">
+<span class="sig-name descname"><span class="pre">filter_shots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">psi_bitstring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></span><a class="headerlink" href="#timeseries_qmc.mitigation.SymmetryFilter.filter_shots" title="Permalink to this definition"></a></dt>
+<dd><p>Remove the shots of the catlike-state circuit that violate the symmetry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shots</strong> (<a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – 2D array of ones and zeros representing the shots measured from the catelike-state circuit.</p></li>
+<li><p><strong>psi_bitstring</strong> (list or <a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – List/array of ones and zeros representation of the psi state which specifies the structure of the
+catlike-state circuit.</p></li>
+<li><p><strong>log</strong> (<em>boolean</em>) – Whether to assume linear- or logarithmic-depth catlike-state circuit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>filtered_shots</strong> – 2D array of integers representing the filtered shots that preserve the symmetry.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.mitigation.SymmetryFilter.has_same_symmetry">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">has_same_symmetry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bit_string1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bit_string2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#timeseries_qmc.mitigation.SymmetryFilter.has_same_symmetry" title="Permalink to this definition"></a></dt>
+<dd><p>Check if two product states have the same symmetry</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bit_string1</strong> (list or <a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – List/array of zeros and ones representing some product state.</p></li>
+<li><p><strong>bit_string2</strong> (list or <a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – List/array of zeros and ones representing anpther product state.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.mitigation.SymmetryFilter.is_valid_shot">
+<span class="sig-name descname"><span class="pre">is_valid_shot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">psi_bitstring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#timeseries_qmc.mitigation.SymmetryFilter.is_valid_shot" title="Permalink to this definition"></a></dt>
+<dd><p>Checks whether the measured product state is a possible output of the catlike-state circuit</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shot</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – List/array of ones and zeros representing the shot measured from the catelike-state circuit.</p></li>
+<li><p><strong>psi_bitstring</strong> (list or <a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – List/array of ones and zeros representation of the psi state which specifies the structure of the
+catlike-state circuit.</p></li>
+<li><p><strong>log</strong> (<em>boolean</em>) – Whether to assume linear- or logarithmic-depth catlike-state circuit.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="timeseries_qmc.mitigation.TotalSzFilter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">timeseries_qmc.mitigation.</span></span><span class="sig-name descname"><span class="pre">TotalSzFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.mitigation.TotalSzFilter" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#timeseries_qmc.mitigation.SymmetryFilter" title="timeseries_qmc.mitigation._symmetry.SymmetryFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymmetryFilter</span></code></a></p>
+<p>Class for filtering shots of the catlike-state circuit that do not conserve the total Sz quantum number.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>L</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of qubits.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.mitigation.TotalSzFilter.has_same_symmetry">
+<span class="sig-name descname"><span class="pre">has_same_symmetry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bit_string1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bit_string2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="headerlink" href="#timeseries_qmc.mitigation.TotalSzFilter.has_same_symmetry" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited method. See <a class="reference internal" href="#timeseries_qmc.mitigation.SymmetryFilter.has_same_symmetry" title="timeseries_qmc.mitigation.SymmetryFilter.has_same_symmetry"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SymmetryFilter.has_same_symmetry()</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="timeseries_qmc.mitigation.correct_measurment_error">
+<span class="sig-prename descclassname"><span class="pre">timeseries_qmc.mitigation.</span></span><span class="sig-name descname"><span class="pre">correct_measurment_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">m0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.999</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.995</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></span><a class="headerlink" href="#timeseries_qmc.mitigation.correct_measurment_error" title="Permalink to this definition"></a></dt>
+<dd><p>Corrects the measurement error of a single qubit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The measured probability of 0.</p></li>
+<li><p><strong>m0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The probability of measuring 0 when the actual value is 0.</p></li>
+<li><p><strong>m1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The probability of measuring 1 when the actual value is 1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>p0_corrected</strong> – The corrected probability of measuring 0.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="timeseries_qmc.loschmidt.html" class="btn btn-neutral float-left" title="timeseries_qmc.loschmidt" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="timeseries_qmc.models.html" class="btn btn-neutral float-right" title="timeseries_qmc.models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Quantinuum GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

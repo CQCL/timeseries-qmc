@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>timeseries_qmc.boltzmann &mdash; TimeseriesQMC 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/jupyter-sphinx.css" type="text/css" />
+      <link rel="stylesheet" href="_static/thebelab.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script src="_static/thebelab-helper.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="timeseries_qmc.loschmidt" href="timeseries_qmc.loschmidt.html" />
+    <link rel="prev" title="API Documentation" href="api.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            TimeseriesQMC
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">timeseries_qmc.boltzmann</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.boltzmann.ApproximateBoltzmannWeight"><code class="docutils literal notranslate"><span class="pre">ApproximateBoltzmannWeight</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.boltzmann.ApproximateBoltzmannWeight.calculate"><code class="docutils literal notranslate"><span class="pre">ApproximateBoltzmannWeight.calculate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.boltzmann.BoltzmannWeightCalculator"><code class="docutils literal notranslate"><span class="pre">BoltzmannWeightCalculator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.boltzmann.BoltzmannWeightCalculator.calculate"><code class="docutils literal notranslate"><span class="pre">BoltzmannWeightCalculator.calculate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.boltzmann.ExactBoltzmannWeight"><code class="docutils literal notranslate"><span class="pre">ExactBoltzmannWeight</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.boltzmann.ExactBoltzmannWeight.calculate"><code class="docutils literal notranslate"><span class="pre">ExactBoltzmannWeight.calculate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.boltzmann.FourierTransform"><code class="docutils literal notranslate"><span class="pre">FourierTransform</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.boltzmann.FourierTransform.calculate"><code class="docutils literal notranslate"><span class="pre">FourierTransform.calculate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.boltzmann.FourierTransform.estimate_density"><code class="docutils literal notranslate"><span class="pre">FourierTransform.estimate_density()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.boltzmann.NNLS"><code class="docutils literal notranslate"><span class="pre">NNLS</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.boltzmann.NNLS.calculate"><code class="docutils literal notranslate"><span class="pre">NNLS.calculate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.boltzmann.NNLS.estimate_density"><code class="docutils literal notranslate"><span class="pre">NNLS.estimate_density()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.loschmidt.html">timeseries_qmc.loschmidt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.mitigation.html">timeseries_qmc.mitigation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.models.html">timeseries_qmc.models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.sampling.html">timeseries_qmc.sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.utils.html">timeseries_qmc.utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">TimeseriesQMC</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="api.html">API Documentation</a></li>
+      <li class="breadcrumb-item active">timeseries_qmc.boltzmann</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/timeseries_qmc.boltzmann.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="timeseries-qmc-boltzmann">
+<h1>timeseries_qmc.boltzmann<a class="headerlink" href="#timeseries-qmc-boltzmann" title="Permalink to this heading"></a></h1>
+<figure class="align-default" id="id1">
+<span id="boltzmann"></span><div class="graphviz"><object data="_images/inheritance-b4ec84490baedd276d260e7ba35c6f2df2f7f453.svg" type="image/svg+xml" class="inheritance graphviz">
+<p class="warning">Inheritance diagram of timeseries_qmc.boltzmann.ExactBoltzmannWeight, timeseries_qmc.boltzmann.ApproximateBoltzmannWeight, timeseries_qmc.boltzmann.FourierTransform, timeseries_qmc.boltzmann.NNLS</p></object></div>
+<figcaption>
+<p><span class="caption-text">Calculators of Boltzmann Weights</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<span class="target" id="module-timeseries_qmc.boltzmann"></span><dl class="py class">
+<dt class="sig sig-object py" id="timeseries_qmc.boltzmann.ApproximateBoltzmannWeight">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">timeseries_qmc.boltzmann.</span></span><span class="sig-name descname"><span class="pre">ApproximateBoltzmannWeight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="timeseries_qmc.models.html#timeseries_qmc.models.Model" title="timeseries_qmc.models._model.Model"><span class="pre">Model</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.boltzmann.ApproximateBoltzmannWeight" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#timeseries_qmc.boltzmann.BoltzmannWeightCalculator" title="timeseries_qmc.boltzmann._calculator.BoltzmannWeightCalculator"><code class="xref py py-class docutils literal notranslate"><span class="pre">BoltzmannWeightCalculator</span></code></a></p>
+<p>Class for calculating Botlzmann weights of a model approximately by assuming that the local density of states is
+a Gaussian centered at the energy of the state and whose varaince equals the energy variance of the state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<a class="reference internal" href="timeseries_qmc.models.html#timeseries_qmc.models.Model" title="timeseries_qmc.models.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">models.Model</span></code></a>) – Model Hamilotonain.</p></li>
+<li><p><strong>beta</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – inverse temperature.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.boltzmann.ApproximateBoltzmannWeight.calculate">
+<span class="sig-name descname"><span class="pre">calculate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi_bitstring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#timeseries_qmc.boltzmann.ApproximateBoltzmannWeight.calculate" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited method. See <a class="reference internal" href="#timeseries_qmc.boltzmann.BoltzmannWeightCalculator.calculate" title="timeseries_qmc.boltzmann.BoltzmannWeightCalculator.calculate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">BoltzmannWeightCalculator.calculate()</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="timeseries_qmc.boltzmann.BoltzmannWeightCalculator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">timeseries_qmc.boltzmann.</span></span><span class="sig-name descname"><span class="pre">BoltzmannWeightCalculator</span></span><a class="headerlink" href="#timeseries_qmc.boltzmann.BoltzmannWeightCalculator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
+<p>Abstract base class for calculating Botlzmann weights and the associated local energy moments.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.boltzmann.BoltzmannWeightCalculator.calculate">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calculate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi_bitstring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#timeseries_qmc.boltzmann.BoltzmannWeightCalculator.calculate" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the Boltzmann weight of a state and the first and second moments of its local energy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>psi_bitstring</strong> (list or <a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – List/array of zeros and ones representing some product state <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>w</strong> (<em>float</em>) – Boltzmann weight <span class="math notranslate nohighlight">\(\langle\psi| e^{-\beta H}|\psi \rangle\)</span>.</p></li>
+<li><p><strong>e</strong> (<em>float</em>) – Local value of energy <span class="math notranslate nohighlight">\({\langle\psi| e^{-\beta H} H |\psi \rangle}/
+{\langle\psi| e^{\beta H}|\psi \rangle}\)</span>.</p></li>
+<li><p><strong>e_sq</strong> (<em>float</em>) – Local value of energy’s second moment <span class="math notranslate nohighlight">\({\langle\psi| e^{-\beta H} H^2 |\psi \rangle}/
+{\langle\psi| e^{\beta H}|\psi \rangle}\)</span>.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="timeseries_qmc.boltzmann.ExactBoltzmannWeight">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">timeseries_qmc.boltzmann.</span></span><span class="sig-name descname"><span class="pre">ExactBoltzmannWeight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="timeseries_qmc.models.html#timeseries_qmc.models.Model" title="timeseries_qmc.models._model.Model"><span class="pre">Model</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.boltzmann.ExactBoltzmannWeight" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#timeseries_qmc.boltzmann.BoltzmannWeightCalculator" title="timeseries_qmc.boltzmann._calculator.BoltzmannWeightCalculator"><code class="xref py py-class docutils literal notranslate"><span class="pre">BoltzmannWeightCalculator</span></code></a></p>
+<p>Class for calculating Botlzmann weights of a model exactly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<a class="reference internal" href="timeseries_qmc.models.html#timeseries_qmc.models.Model" title="timeseries_qmc.models.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">models.Model</span></code></a>) – Model Hamilotonain.</p></li>
+<li><p><strong>beta</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – inverse temperature.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.boltzmann.ExactBoltzmannWeight.calculate">
+<span class="sig-name descname"><span class="pre">calculate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi_bistring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#timeseries_qmc.boltzmann.ExactBoltzmannWeight.calculate" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited method. See <a class="reference internal" href="#timeseries_qmc.boltzmann.BoltzmannWeightCalculator.calculate" title="timeseries_qmc.boltzmann.BoltzmannWeightCalculator.calculate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">BoltzmannWeightCalculator.calculate()</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="timeseries_qmc.boltzmann.FourierTransform">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">timeseries_qmc.boltzmann.</span></span><span class="sig-name descname"><span class="pre">FourierTransform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">loschmidt_echo_evaluator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="timeseries_qmc.loschmidt.html#timeseries_qmc.loschmidt.LoschmidtEchoEvaluator" title="timeseries_qmc.loschmidt._evaluator.LoschmidtEchoEvaluator"><span class="pre">LoschmidtEchoEvaluator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_omega</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1024</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omega_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cutoff_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.boltzmann.FourierTransform" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#timeseries_qmc.boltzmann.BoltzmannWeightCalculator" title="timeseries_qmc.boltzmann._calculator.BoltzmannWeightCalculator"><code class="xref py py-class docutils literal notranslate"><span class="pre">BoltzmannWeightCalculator</span></code></a></p>
+<p>Class for calculating Botlzmann weights from time series of Loschmidt echo via direct Fourier trasnfrom.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>beta</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Inverse temperature.</p></li>
+<li><p><strong>loschmidt_echo_evaluator</strong> (<a class="reference internal" href="timeseries_qmc.loschmidt.html#timeseries_qmc.loschmidt.LoschmidtEchoEvaluator" title="timeseries_qmc.loschmidt.LoschmidtEchoEvaluator"><code class="xref py py-class docutils literal notranslate"><span class="pre">loschmidt.LoschmidtEchoEvaluator</span></code></a>) – Evaluator of Loschimidt echos used to calculate the time series.</p></li>
+<li><p><strong>t_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Maximum time used to evaluate Loschmidt echos.</p></li>
+<li><p><strong>n_t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of time points used to evaluate Loschmidt echos.</p></li>
+<li><p><strong>n_omega</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of points of the frequency grid used to recostruct the local density of states.</p></li>
+<li><p><strong>omega_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Maximum frequency of the grid used to reconstruct the local density of states.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code> is used, Nyquist frequency is used based on the specified time parameters.</p></li>
+<li><p><strong>delta</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Inverse of the width of the Gaussian filter used on the time series.
+Note that this Gaussian filter effectively broadens the density of states by <cite>delta</cite>.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code> is used, the reciprocal of the maximum time is used.</p></li>
+<li><p><strong>cutoff_factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Parameter <span class="math notranslate nohighlight">\(C\)</span> controlling the cutoff on the density of states.
+The actual cutoff is <span class="math notranslate nohighlight">\(C\)</span> times the maximum absolute value of the negative part of the density.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.boltzmann.FourierTransform.calculate">
+<span class="sig-name descname"><span class="pre">calculate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi_bitstring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#timeseries_qmc.boltzmann.FourierTransform.calculate" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited method. See <a class="reference internal" href="#timeseries_qmc.boltzmann.BoltzmannWeightCalculator.calculate" title="timeseries_qmc.boltzmann.BoltzmannWeightCalculator.calculate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">BoltzmannWeightCalculator.calculate()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.boltzmann.FourierTransform.estimate_density">
+<span class="sig-name descname"><span class="pre">estimate_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi_bitstring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">numpy.ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">numpy.ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#timeseries_qmc.boltzmann.FourierTransform.estimate_density" title="Permalink to this definition"></a></dt>
+<dd><p>Esimate the local density of states.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>psi_bitstring</strong> (list or <a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – List/array of zeros and ones representing some product state <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>D</strong> (<a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – Local density of state.</p></li>
+<li><p><strong>omega</strong> (<a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – Grid points on which the local density of states is evaluated.</p></li>
+<li><p><strong>d_omega</strong> (<em>float</em>) – Grid spacing of <strong>omega</strong>.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="timeseries_qmc.boltzmann.NNLS">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">timeseries_qmc.boltzmann.</span></span><span class="sig-name descname"><span class="pre">NNLS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="timeseries_qmc.models.html#timeseries_qmc.models.Model" title="timeseries_qmc.models._model.Model"><span class="pre">Model</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">loschmidt_echo_evaluator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="timeseries_qmc.loschmidt.html#timeseries_qmc.loschmidt.LoschmidtEchoEvaluator" title="timeseries_qmc.loschmidt._evaluator.LoschmidtEchoEvaluator"><span class="pre">LoschmidtEchoEvaluator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_omega</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">256</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omega_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discrepency_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm_relative_weight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adjust_moments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.boltzmann.NNLS" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#timeseries_qmc.boltzmann.BoltzmannWeightCalculator" title="timeseries_qmc.boltzmann._calculator.BoltzmannWeightCalculator"><code class="xref py py-class docutils literal notranslate"><span class="pre">BoltzmannWeightCalculator</span></code></a></p>
+<p>Class for calculating Botlzmann weights from time series of Loschmidt echo via non-negative least squares.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<a class="reference internal" href="timeseries_qmc.models.html#timeseries_qmc.models.Model" title="timeseries_qmc.models.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">models.Model</span></code></a>) – Model Hamiltonain.</p></li>
+<li><p><strong>beta</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Inverse temperature.</p></li>
+<li><p><strong>loschmidt_echo_evaluator</strong> (<a class="reference internal" href="timeseries_qmc.loschmidt.html#timeseries_qmc.loschmidt.LoschmidtEchoEvaluator" title="timeseries_qmc.loschmidt.LoschmidtEchoEvaluator"><code class="xref py py-class docutils literal notranslate"><span class="pre">loschmidt.LoschmidtEchoEvaluator</span></code></a>) – Evaluator of Loschimidt echos used to calculate the time series.</p></li>
+<li><p><strong>t_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Maximum time used to evaluate Loschmidt echos.</p></li>
+<li><p><strong>n_t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of time points used to evaluate Loschmidt echos.</p></li>
+<li><p><strong>n_omega</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of points of the frequency grid used to recostruct the local density of states.</p></li>
+<li><p><strong>omega_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Maximum frequency of the grid used to reconstruct the local density of states.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code> is used, Nyquist frequency is used based on the specified time parameters.</p></li>
+<li><p><strong>delta_factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Parameter <span class="math notranslate nohighlight">\(C_\delta\)</span> used to determine the inverse width of the Gaussian filter used on the time series.
+The inverse width is <span class="math notranslate nohighlight">\(C_\delta\)</span> times the spacing of the frequency grid.</p></li>
+<li><p><strong>discrepency_factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Parameter <span class="math notranslate nohighlight">\(C_d\)</span> used to determine the expected weighted error on the time series.
+The expected weighted error is <span class="math notranslate nohighlight">\(C_d\)</span> times the total number of data points (which, in turm, is twice the
+number of time points).</p></li>
+<li><p><strong>adjust_moments</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to fix the norm, mean and varaince of the local density of states to their exact values after performing
+the quantile filter.</p></li>
+<li><p><strong>norm_relative_weight</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The relative weight of the norm data point (i.e. t=0) with respect to the rest of the time series.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.boltzmann.NNLS.calculate">
+<span class="sig-name descname"><span class="pre">calculate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi_bitstring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#timeseries_qmc.boltzmann.NNLS.calculate" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited method. See <a class="reference internal" href="#timeseries_qmc.boltzmann.BoltzmannWeightCalculator.calculate" title="timeseries_qmc.boltzmann.BoltzmannWeightCalculator.calculate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">BoltzmannWeightCalculator.calculate()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.boltzmann.NNLS.estimate_density">
+<span class="sig-name descname"><span class="pre">estimate_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi_bitstring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">numpy.ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">numpy.ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#timeseries_qmc.boltzmann.NNLS.estimate_density" title="Permalink to this definition"></a></dt>
+<dd><p>Esimate the local density of states.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>psi_bitstring</strong> (list or <a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – List/array of zeros and ones representing some product state <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>D</strong> (<a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – Local density of state.</p></li>
+<li><p><strong>omega</strong> (<a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – Grid points on which the local density of states is evaluated.</p></li>
+<li><p><strong>d_omega</strong> (<em>float</em>) – Grid spacing of <strong>omega</strong>.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="api.html" class="btn btn-neutral float-left" title="API Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="timeseries_qmc.loschmidt.html" class="btn btn-neutral float-right" title="timeseries_qmc.loschmidt" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Quantinuum GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>timeseries_qmc.loschmidt &mdash; TimeseriesQMC 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/jupyter-sphinx.css" type="text/css" />
+      <link rel="stylesheet" href="_static/thebelab.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script src="_static/thebelab-helper.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="timeseries_qmc.mitigation" href="timeseries_qmc.mitigation.html" />
+    <link rel="prev" title="timeseries_qmc.boltzmann" href="timeseries_qmc.boltzmann.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            TimeseriesQMC
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.boltzmann.html">timeseries_qmc.boltzmann</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">timeseries_qmc.loschmidt</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.loschmidt.Catstate"><code class="docutils literal notranslate"><span class="pre">Catstate</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.loschmidt.Catstate.evaluate"><code class="docutils literal notranslate"><span class="pre">Catstate.evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.loschmidt.ExactLoschmidtEcho"><code class="docutils literal notranslate"><span class="pre">ExactLoschmidtEcho</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.loschmidt.ExactLoschmidtEcho.evaluate"><code class="docutils literal notranslate"><span class="pre">ExactLoschmidtEcho.evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.loschmidt.Hadamard"><code class="docutils literal notranslate"><span class="pre">Hadamard</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.loschmidt.Hadamard.evaluate"><code class="docutils literal notranslate"><span class="pre">Hadamard.evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.loschmidt.LoschmidtEchoEvaluator"><code class="docutils literal notranslate"><span class="pre">LoschmidtEchoEvaluator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.loschmidt.LoschmidtEchoEvaluator.evaluate"><code class="docutils literal notranslate"><span class="pre">LoschmidtEchoEvaluator.evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.loschmidt.TrotterizedLoschmidtEcho"><code class="docutils literal notranslate"><span class="pre">TrotterizedLoschmidtEcho</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.loschmidt.TrotterizedLoschmidtEcho.evaluate"><code class="docutils literal notranslate"><span class="pre">TrotterizedLoschmidtEcho.evaluate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.mitigation.html">timeseries_qmc.mitigation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.models.html">timeseries_qmc.models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.sampling.html">timeseries_qmc.sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.utils.html">timeseries_qmc.utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">TimeseriesQMC</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="api.html">API Documentation</a></li>
+      <li class="breadcrumb-item active">timeseries_qmc.loschmidt</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/timeseries_qmc.loschmidt.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="timeseries-qmc-loschmidt">
+<h1>timeseries_qmc.loschmidt<a class="headerlink" href="#timeseries-qmc-loschmidt" title="Permalink to this heading"></a></h1>
+<figure class="align-default" id="id1">
+<span id="loschmidt"></span><div class="graphviz"><object data="_images/inheritance-f525627e4e5837917b27cc37dfd68462e154c416.svg" type="image/svg+xml" class="inheritance graphviz">
+<p class="warning">Inheritance diagram of timeseries_qmc.loschmidt.ExactLoschmidtEcho, timeseries_qmc.loschmidt.TrotterizedLoschmidtEcho, timeseries_qmc.loschmidt.Hadamard, timeseries_qmc.loschmidt.Catstate</p></object></div>
+<figcaption>
+<p><span class="caption-text">Evaluators of Loschmidt Echos</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<span class="target" id="module-timeseries_qmc.loschmidt"></span><dl class="py class">
+<dt class="sig sig-object py" id="timeseries_qmc.loschmidt.Catstate">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">timeseries_qmc.loschmidt.</span></span><span class="sig-name descname"><span class="pre">Catstate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="timeseries_qmc.models.html#timeseries_qmc.models.Model" title="timeseries_qmc.models._model.Model"><span class="pre">Model</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/backends.html#pytket.backends.Backend" title="(in pytket v1.18)"><span class="pre">Backend</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_shots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trotter_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt_trotter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_energy_shift</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_preperation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symmetry_filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="timeseries_qmc.mitigation.html#timeseries_qmc.mitigation.SymmetryFilter" title="timeseries_qmc.mitigation._symmetry.SymmetryFilter"><span class="pre">SymmetryFilter</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.loschmidt.Catstate" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#timeseries_qmc.loschmidt.LoschmidtEchoEvaluator" title="timeseries_qmc.loschmidt._evaluator.LoschmidtEchoEvaluator"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoschmidtEchoEvaluator</span></code></a></p>
+<p>Evaluates Loschmidt echos using of a model Trotterized quantum circuits via the cat-state trick.</p>
+<p>The error estimates of this evaluator are the standard deviations of shot noise.
+Totterization error is not taken into account.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<a class="reference internal" href="timeseries_qmc.models.html#timeseries_qmc.models.Model" title="timeseries_qmc.models.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">models.Model</span></code></a>) – <p>Model Hamiltonain.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This implementation of the cat-state trick assumes that <span class="math notranslate nohighlight">\(|0\dots 0\rangle\)</span> is an eigenstate
+of the Hamiltonian. It is the responsibility of the user to ensure that the supplied model (even
+after Trotterization) satifies this property.</p>
+</div>
+</p></li>
+<li><p><strong>backend</strong> (<a class="reference external" href="https://cqcl.github.io/tket/pytket/api/backends.html#pytket.backends.Backend" title="(in pytket v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytket.backends.backend.Backend</span></code></a>) – Backend used to run the quantum circuits.</p></li>
+<li><p><strong>n_shots</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of shots used for each circuit.</p></li>
+<li><p><strong>cache_directroy</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Directory used to cache compiled circuits, job handles and shots.
+When <code class="docutils literal notranslate"><span class="pre">None</span></code> is used, objects are cached in memory.</p></li>
+<li><p><strong>trotter_order</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The order of Tortterization. Currently, only 1st and 2nd orders are supported.</p></li>
+<li><p><strong>n_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of Trotter steps. Either this parameter or <strong>dt_trotter</strong> needs to be specified.
+Both parameters cannot be specified simultaneously.</p></li>
+<li><p><strong>dt_trotter</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Size of Trotter step. Either this parameter or <strong>n_steps</strong> needs to be specified.
+Both parameters cannot be specified simultaneously.</p></li>
+<li><p><strong>use_energy_shift</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to shift the Hamiltonain by the energy of the state before running its circuits.
+When this happens, the Loschmidt echos will be shifted back.</p></li>
+<li><p><strong>log_preperation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to use a circuit of logarithmic depth for prepering the cat state.
+Deafult value is true (recommended).</p></li>
+<li><p><strong>symmetry_filter</strong> (<a class="reference internal" href="timeseries_qmc.mitigation.html#timeseries_qmc.mitigation.SymmetryFilter" title="timeseries_qmc.mitigation.SymmetryFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">mitigation.SymmetryFilter</span></code></a>) – <p>Filter for the shots of a noisy quantum circuit that violate the symmetries of the models.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code> is used, the backend is assumed to be noiseless and shots are filtered.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>It is the responsibility of the user to ensure that the supplied <strong>symmetry_filter</strong> actually
+describes the symmetries of the supplied <strong>model</strong>.</p>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.loschmidt.Catstate.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi_bistring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">numpy.ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">numpy.ndarray</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#timeseries_qmc.loschmidt.Catstate.evaluate" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited method. See <a class="reference internal" href="#timeseries_qmc.loschmidt.LoschmidtEchoEvaluator.evaluate" title="timeseries_qmc.loschmidt.LoschmidtEchoEvaluator.evaluate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoschmidtEchoEvaluator.evaluate()</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="timeseries_qmc.loschmidt.ExactLoschmidtEcho">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">timeseries_qmc.loschmidt.</span></span><span class="sig-name descname"><span class="pre">ExactLoschmidtEcho</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="timeseries_qmc.models.html#timeseries_qmc.models.Model" title="timeseries_qmc.models._model.Model"><span class="pre">Model</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.loschmidt.ExactLoschmidtEcho" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#timeseries_qmc.loschmidt.LoschmidtEchoEvaluator" title="timeseries_qmc.loschmidt._evaluator.LoschmidtEchoEvaluator"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoschmidtEchoEvaluator</span></code></a></p>
+<p>Class for evaluating Loschmidt echos of a model exactly.</p>
+<p>The error estimates of this evaluator are always zero.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>model</strong> (<a class="reference internal" href="timeseries_qmc.models.html#timeseries_qmc.models.Model" title="timeseries_qmc.models.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">models.Model</span></code></a>) – Model Hamilotonain.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.loschmidt.ExactLoschmidtEcho.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi_bistring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">numpy.ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">numpy.ndarray</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#timeseries_qmc.loschmidt.ExactLoschmidtEcho.evaluate" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited method. See <a class="reference internal" href="#timeseries_qmc.loschmidt.LoschmidtEchoEvaluator.evaluate" title="timeseries_qmc.loschmidt.LoschmidtEchoEvaluator.evaluate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoschmidtEchoEvaluator.evaluate()</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="timeseries_qmc.loschmidt.Hadamard">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">timeseries_qmc.loschmidt.</span></span><span class="sig-name descname"><span class="pre">Hadamard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="timeseries_qmc.models.html#timeseries_qmc.models.Model" title="timeseries_qmc.models._model.Model"><span class="pre">Model</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/backends.html#pytket.backends.Backend" title="(in pytket v1.18)"><span class="pre">Backend</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_shots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trotter_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt_trotter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_energy_shift</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_controls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_optimized_control</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fidelity_estimator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="timeseries_qmc.mitigation.html#timeseries_qmc.mitigation.FidelityEstimator" title="timeseries_qmc.mitigation._fidelity.FidelityEstimator"><span class="pre">FidelityEstimator</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.loschmidt.Hadamard" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#timeseries_qmc.loschmidt.LoschmidtEchoEvaluator" title="timeseries_qmc.loschmidt._evaluator.LoschmidtEchoEvaluator"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoschmidtEchoEvaluator</span></code></a></p>
+<p>Evaluates Loschmidt echos using of a model Trotterized quantum circuits via the Hadamard test.</p>
+<p>The error estimates of this evaluator are the standard deviations of shot noise.
+Totterization error is not taken into account.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<a class="reference internal" href="timeseries_qmc.models.html#timeseries_qmc.models.Model" title="timeseries_qmc.models.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">models.Model</span></code></a>) – Model Hamiltonain.</p></li>
+<li><p><strong>backend</strong> (<a class="reference external" href="https://cqcl.github.io/tket/pytket/api/backends.html#pytket.backends.Backend" title="(in pytket v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytket.backends.backend.Backend</span></code></a>) – Backend used to run the quantum circuits.</p></li>
+<li><p><strong>n_shots</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of shots used for each circuit.</p></li>
+<li><p><strong>cache_directroy</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Directory used to cache compiled circuits, job handles and shots.
+When <code class="docutils literal notranslate"><span class="pre">None</span></code> is used, objects are cached in memory.</p></li>
+<li><p><strong>trotter_order</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The order of Tortterization. Currently, only 1st and 2nd orders are supported.</p></li>
+<li><p><strong>n_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of Trotter steps. Either this parameter or <strong>dt_trotter</strong> needs to be specified.
+Both parameters cannot be specified simultaneously.</p></li>
+<li><p><strong>dt_trotter</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Size of Trotter step. Either this parameter or <strong>n_steps</strong> needs to be specified.
+Both parameters cannot be specified simultaneously.</p></li>
+<li><p><strong>use_energy_shift</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to shift the Hamiltonain by the energy of the state before running its circuits.
+When this happens, the Loschmidt echos will be shifted back.</p></li>
+<li><p><strong>n_controls</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of control qubits used in the Hadamard test. It should be greater than zero.</p></li>
+<li><p><strong>split</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to split 2nd-order Trotter cicuit or not. See <a class="reference internal" href="timeseries_qmc.models.html#timeseries_qmc.models.Model.make_split_2nd_trotter_circuits" title="timeseries_qmc.models.Model.make_split_2nd_trotter_circuits"><code class="xref py py-meth docutils literal notranslate"><span class="pre">models.Model.make_split_2nd_trotter_circuits()</span></code></a>
+for details. This paramter is ignored for 1st-order circuits.</p></li>
+<li><p><strong>use_optimized_control</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to use manually-optimized controlled gates or rely on pytket QControlBox.</p></li>
+<li><p><strong>fidelity_estimator</strong> (<a class="reference internal" href="timeseries_qmc.mitigation.html#timeseries_qmc.mitigation.FidelityEstimator" title="timeseries_qmc.mitigation.FidelityEstimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">mitigation.FidelityEstimator</span></code></a>) – <p>Estimator of the total fidelity of a quantum circuit (aka q-factor).
+This can be used to rescale Loschmidt echo, when the Backend is a noisy one.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code> is used, the backend is assumed to be noiseless.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>It is the responsibility of the user to ensure that the supplied <strong>fidelity_estimator</strong> actually
+describes the fidelity of the supplied <strong>backend</strong>.</p>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.loschmidt.Hadamard.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi_bistring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">numpy.ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">numpy.ndarray</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#timeseries_qmc.loschmidt.Hadamard.evaluate" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited method. See <a class="reference internal" href="#timeseries_qmc.loschmidt.LoschmidtEchoEvaluator.evaluate" title="timeseries_qmc.loschmidt.LoschmidtEchoEvaluator.evaluate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoschmidtEchoEvaluator.evaluate()</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="timeseries_qmc.loschmidt.LoschmidtEchoEvaluator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">timeseries_qmc.loschmidt.</span></span><span class="sig-name descname"><span class="pre">LoschmidtEchoEvaluator</span></span><a class="headerlink" href="#timeseries_qmc.loschmidt.LoschmidtEchoEvaluator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
+<p>Abstract base class for evaluating Loschmidt echos.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.loschmidt.LoschmidtEchoEvaluator.evaluate">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi_bistring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">numpy.ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">numpy.ndarray</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#timeseries_qmc.loschmidt.LoschmidtEchoEvaluator.evaluate" title="Permalink to this definition"></a></dt>
+<dd><p>Evaluate Loschmidt echos and estimate their errors for the specified state and times.</p>
+<section id="parameter">
+<h2>Parameter<a class="headerlink" href="#parameter" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>psi_bitstring: list or <a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></dt><dd><p>List/array of zeros and ones representing some product state <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>.</p>
+</dd>
+<dt>t:  <a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></dt><dd><p>Array of time points <span class="math notranslate nohighlight">\(t_i\)</span> at which to evluate Loschmidt echos.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>echos</strong> (<a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – Array of Loschmidt echos <span class="math notranslate nohighlight">\(\langle\psi|e^{-H t_i}|\psi\rangle\)</span> at time points <span class="math notranslate nohighlight">\(t_i\)</span>.
+Note that Loschmidt echos are complex numbers.</p></li>
+<li><p><strong>errors</strong> (<a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – Array of estimates of the errors made in computing <cite>echos</cite>.
+Note that the elements of the array are complex numbers. The real/imaginary part represents the error
+in the real/imaginary part of the echo, respectively.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="timeseries_qmc.loschmidt.TrotterizedLoschmidtEcho">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">timeseries_qmc.loschmidt.</span></span><span class="sig-name descname"><span class="pre">TrotterizedLoschmidtEcho</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="timeseries_qmc.models.html#timeseries_qmc.models.Model" title="timeseries_qmc.models._model.Model"><span class="pre">Model</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">trotter_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt_trotter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">err_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">err_scaling</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'quadratic'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.loschmidt.TrotterizedLoschmidtEcho" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#timeseries_qmc.loschmidt.LoschmidtEchoEvaluator" title="timeseries_qmc.loschmidt._evaluator.LoschmidtEchoEvaluator"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoschmidtEchoEvaluator</span></code></a></p>
+<p>Class for evaluating Loschmidt echos of a model via Trotterization.</p>
+<p>The error estimates of this evaluator are rough estimates of Trotterization error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<a class="reference internal" href="timeseries_qmc.models.html#timeseries_qmc.models.Model" title="timeseries_qmc.models.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">models.Model</span></code></a>) – Model Hamilotonain.</p></li>
+<li><p><strong>trotter_order</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The order of Tortterization. Currently, only 1st and 2nd orders are supported.</p></li>
+<li><p><strong>n_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of Trotter steps. Either this parameter or <strong>dt_trotter</strong> needs to be specified.
+Both parameters cannot be specified simultaneously.</p></li>
+<li><p><strong>dt_trotter</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Size of Trotter step. Either this parameter or <strong>n_steps</strong> needs to be specified.
+Both parameters cannot be specified simultaneously.</p></li>
+<li><p><strong>err_factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Prefactor for error estimates <span class="math notranslate nohighlight">\(C\)</span>.</p></li>
+<li><p><strong>err_scaling</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – <p>Specifies how the Trotter errors are estiamted. The value can be either ‘linear’ or ‘quadratic’.
+Linear scaling estimates the error as <span class="math notranslate nohighlight">\(C t^2/n\)</span>, while quadratic scaling estimates it as
+<span class="math notranslate nohighlight">\(C t^3/n^2\)</span>, where <span class="math notranslate nohighlight">\(n\)</span> is the number of Trotter steps and <span class="math notranslate nohighlight">\(t\)</span> is the total evolution time.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Generally 1st-order Trotter has linear scaling while 2nd-order Trotterization has quadratic scaling.
+However, in some special cases, even 1st-order Trotter has quadratic scaling.</p>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.loschmidt.TrotterizedLoschmidtEcho.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi_bistring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">numpy.ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">numpy.ndarray</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#timeseries_qmc.loschmidt.TrotterizedLoschmidtEcho.evaluate" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited method. See <a class="reference internal" href="#timeseries_qmc.loschmidt.LoschmidtEchoEvaluator.evaluate" title="timeseries_qmc.loschmidt.LoschmidtEchoEvaluator.evaluate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoschmidtEchoEvaluator.evaluate()</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="timeseries_qmc.boltzmann.html" class="btn btn-neutral float-left" title="timeseries_qmc.boltzmann" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="timeseries_qmc.mitigation.html" class="btn btn-neutral float-right" title="timeseries_qmc.mitigation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Quantinuum GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>timeseries_qmc.models &mdash; TimeseriesQMC 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/jupyter-sphinx.css" type="text/css" />
+      <link rel="stylesheet" href="_static/thebelab.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script src="_static/thebelab-helper.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="timeseries_qmc.sampling" href="timeseries_qmc.sampling.html" />
+    <link rel="prev" title="timeseries_qmc.mitigation" href="timeseries_qmc.mitigation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            TimeseriesQMC
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.boltzmann.html">timeseries_qmc.boltzmann</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.loschmidt.html">timeseries_qmc.loschmidt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.mitigation.html">timeseries_qmc.mitigation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">timeseries_qmc.models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.models.HeisenbergBonded"><code class="docutils literal notranslate"><span class="pre">HeisenbergBonded</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.HeisenbergBonded.append_gates"><code class="docutils literal notranslate"><span class="pre">HeisenbergBonded.append_gates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.HeisenbergBonded.from_coupling_list"><code class="docutils literal notranslate"><span class="pre">HeisenbergBonded.from_coupling_list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.HeisenbergBonded.from_lattice"><code class="docutils literal notranslate"><span class="pre">HeisenbergBonded.from_lattice()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.HeisenbergBonded.get_hamiltonian"><code class="docutils literal notranslate"><span class="pre">HeisenbergBonded.get_hamiltonian()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.HeisenbergBonded.n_qbits"><code class="docutils literal notranslate"><span class="pre">HeisenbergBonded.n_qbits</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.HeisenbergBonded.n_terms"><code class="docutils literal notranslate"><span class="pre">HeisenbergBonded.n_terms</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.models.HeisenbergXYZ"><code class="docutils literal notranslate"><span class="pre">HeisenbergXYZ</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.HeisenbergXYZ.append_gates"><code class="docutils literal notranslate"><span class="pre">HeisenbergXYZ.append_gates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.HeisenbergXYZ.from_coupling_list"><code class="docutils literal notranslate"><span class="pre">HeisenbergXYZ.from_coupling_list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.HeisenbergXYZ.from_lattice"><code class="docutils literal notranslate"><span class="pre">HeisenbergXYZ.from_lattice()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.HeisenbergXYZ.get_hamiltonian"><code class="docutils literal notranslate"><span class="pre">HeisenbergXYZ.get_hamiltonian()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.HeisenbergXYZ.n_qbits"><code class="docutils literal notranslate"><span class="pre">HeisenbergXYZ.n_qbits</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.HeisenbergXYZ.n_terms"><code class="docutils literal notranslate"><span class="pre">HeisenbergXYZ.n_terms</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.models.Ising"><code class="docutils literal notranslate"><span class="pre">Ising</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Ising.append_gates"><code class="docutils literal notranslate"><span class="pre">Ising.append_gates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Ising.from_coupling_list"><code class="docutils literal notranslate"><span class="pre">Ising.from_coupling_list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Ising.from_lattice"><code class="docutils literal notranslate"><span class="pre">Ising.from_lattice()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Ising.get_hamiltonian"><code class="docutils literal notranslate"><span class="pre">Ising.get_hamiltonian()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Ising.n_qbits"><code class="docutils literal notranslate"><span class="pre">Ising.n_qbits</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Ising.n_terms"><code class="docutils literal notranslate"><span class="pre">Ising.n_terms</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.models.Model"><code class="docutils literal notranslate"><span class="pre">Model</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Model.append_gates"><code class="docutils literal notranslate"><span class="pre">Model.append_gates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Model.calc_boltzmann_weight"><code class="docutils literal notranslate"><span class="pre">Model.calc_boltzmann_weight()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Model.calc_energy_mean"><code class="docutils literal notranslate"><span class="pre">Model.calc_energy_mean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Model.calc_energy_moment"><code class="docutils literal notranslate"><span class="pre">Model.calc_energy_moment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Model.calc_energy_variance"><code class="docutils literal notranslate"><span class="pre">Model.calc_energy_variance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Model.calc_thermal_observables"><code class="docutils literal notranslate"><span class="pre">Model.calc_thermal_observables()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Model.evolve_state_1st_trotter"><code class="docutils literal notranslate"><span class="pre">Model.evolve_state_1st_trotter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Model.evolve_state_2nd_trotter"><code class="docutils literal notranslate"><span class="pre">Model.evolve_state_2nd_trotter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Model.evolve_state_exact"><code class="docutils literal notranslate"><span class="pre">Model.evolve_state_exact()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Model.get_full_hamiltonian"><code class="docutils literal notranslate"><span class="pre">Model.get_full_hamiltonian()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Model.get_hamiltonian"><code class="docutils literal notranslate"><span class="pre">Model.get_hamiltonian()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Model.make_1st_trotter_circuit"><code class="docutils literal notranslate"><span class="pre">Model.make_1st_trotter_circuit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Model.make_2nd_trotter_circuit"><code class="docutils literal notranslate"><span class="pre">Model.make_2nd_trotter_circuit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Model.make_amplitude_circuit"><code class="docutils literal notranslate"><span class="pre">Model.make_amplitude_circuit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Model.make_cat_circuit"><code class="docutils literal notranslate"><span class="pre">Model.make_cat_circuit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Model.make_hadamard_circuit"><code class="docutils literal notranslate"><span class="pre">Model.make_hadamard_circuit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Model.make_split_2nd_trotter_circuits"><code class="docutils literal notranslate"><span class="pre">Model.make_split_2nd_trotter_circuits()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Model.n_qbits"><code class="docutils literal notranslate"><span class="pre">Model.n_qbits</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.models.Model.n_terms"><code class="docutils literal notranslate"><span class="pre">Model.n_terms</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.sampling.html">timeseries_qmc.sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.utils.html">timeseries_qmc.utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">TimeseriesQMC</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="api.html">API Documentation</a></li>
+      <li class="breadcrumb-item active">timeseries_qmc.models</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/timeseries_qmc.models.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="timeseries-qmc-models">
+<h1>timeseries_qmc.models<a class="headerlink" href="#timeseries-qmc-models" title="Permalink to this heading"></a></h1>
+<figure class="align-default" id="id1">
+<span id="models"></span><div class="graphviz"><object data="_images/inheritance-8a83a705ddae5a032080da6978a96bf9fe6debb7.svg" type="image/svg+xml" class="inheritance graphviz">
+<p class="warning">Inheritance diagram of timeseries_qmc.models.Ising, timeseries_qmc.models.HeisenbergBonded, timeseries_qmc.models.HeisenbergXYZ</p></object></div>
+<figcaption>
+<p><span class="caption-text">Model Hamiltonains</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<span class="target" id="module-timeseries_qmc.models"></span><dl class="py class">
+<dt class="sig sig-object py" id="timeseries_qmc.models.HeisenbergBonded">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">timeseries_qmc.models.</span></span><span class="sig-name descname"><span class="pre">HeisenbergBonded</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bonds_lists</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_first</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.models.HeisenbergBonded" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#timeseries_qmc.models.Model" title="timeseries_qmc.models._model.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a></p>
+<p>Class for handling Trotterized time evolution of a general Heisenberg model.
+Tortterization is done by seperating terms into mutally-exclusive sets of bonds.
+For an alternative Trotterization, see <a class="reference internal" href="#timeseries_qmc.models.HeisenbergXYZ" title="timeseries_qmc.models.HeisenbergXYZ"><code class="xref py py-class docutils literal notranslate"><span class="pre">HeisenbergXYZ</span></code></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Trotterization of this model conserves the total Sz symmetry when Jx=Jy.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>L</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of spins.</p></li>
+<li><p><strong>bonds_lists</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of lists of lists specifying the interaction part of the hamiltonian.
+Each sublist represents a set of mutally-exclusive set of bonds.
+The first element of each sub-sublist is a float representing the coupling strength Jx.
+The second element is a float representing the coupling strength Jy.
+The third element is a float representing the coupling strength Jz.
+The last two elements are integers representing the interacting sites.</p></li>
+<li><p><strong>z_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of lists specifying the Z part of the hamiltonian.
+The first element of each list is a float representing the strength of magnatic field.
+The other element is an integer representing the site.</p></li>
+<li><p><strong>z_first</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – Specifies whether the Z parts should be applied first in Trotterization.
+Default value is ‘False’.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.HeisenbergBonded.append_gates">
+<span class="sig-name descname"><span class="pre">append_gates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><span class="pre">Circuit</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">term</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_controls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#timeseries_qmc.models.HeisenbergBonded.append_gates" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited method. See <a class="reference internal" href="#timeseries_qmc.models.Model.append_gates" title="timeseries_qmc.models.Model.append_gates"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Model.append_gates()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.HeisenbergBonded.from_coupling_list">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_coupling_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupling_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Jxx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">Jyy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">Jzz</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hz</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_first</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.models.HeisenbergBonded.from_coupling_list" title="Permalink to this definition"></a></dt>
+<dd><p>Shortcut method for creating an instance from a coupling list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>L</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of spins.</p></li>
+<li><p><strong>coupling_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of lists specifying the lattice bonds.
+Each list has two integers representing the sites of the bond.</p></li>
+<li><p><strong>Jxx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Coupling strength in X direction.</p></li>
+<li><p><strong>Jyy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Coupling strength in Y direction.</p></li>
+<li><p><strong>Jzz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Coupling strength in Z direction.</p></li>
+<li><p><strong>hz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Strength of magnatic field in Z direction.</p></li>
+<li><p><strong>z_first</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – Specifies whether the Z parts should be applied first in Trotterization.
+Default value is ‘False’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>model</strong> – Heisneberg model with the specified bonds and parameters.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#timeseries_qmc.models.HeisenbergBonded" title="timeseries_qmc.models.HeisenbergBonded"><code class="xref py py-class docutils literal notranslate"><span class="pre">HeisenbergBonded</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.HeisenbergBonded.from_lattice">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_lattice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.models.lattice.Lattice.html#tenpy.models.lattice.Lattice" title="(in TeNPy v0.10.0)"><span class="pre">Lattice</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">Jxx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">Jyy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">Jzz</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hz</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_first</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.models.HeisenbergBonded.from_lattice" title="Permalink to this definition"></a></dt>
+<dd><p>Shortcut method for creating an instance from a lattice.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lattice</strong> (<a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.models.lattice.Lattice.html#tenpy.models.lattice.Lattice" title="(in TeNPy v0.10.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tenpy.models.lattice.Lattice</span></code></a>) – List of lists specifying the lattice bonds.
+Each list has two integers representing the sites of the bond.</p></li>
+<li><p><strong>Jxx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Coupling strength in X direction.</p></li>
+<li><p><strong>Jyy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Coupling strength in Y direction.</p></li>
+<li><p><strong>Jzz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Coupling strength in Z direction.</p></li>
+<li><p><strong>hz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Strength of magnatic field in Z direction.</p></li>
+<li><p><strong>z_first</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – Specifies whether the Z parts should be applied first in Trotterization.
+Default value is ‘False’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>model</strong> – Heisneberg model with the specified bonds and parameters.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#timeseries_qmc.models.HeisenbergBonded" title="timeseries_qmc.models.HeisenbergBonded"><code class="xref py py-class docutils literal notranslate"><span class="pre">HeisenbergBonded</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.HeisenbergBonded.get_hamiltonian">
+<span class="sig-name descname"><span class="pre">get_hamiltonian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">term</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">hamiltonian</span></span></span><a class="headerlink" href="#timeseries_qmc.models.HeisenbergBonded.get_hamiltonian" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited method. See <a class="reference internal" href="#timeseries_qmc.models.Model.get_hamiltonian" title="timeseries_qmc.models.Model.get_hamiltonian"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Model.get_hamiltonian()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="timeseries_qmc.models.HeisenbergBonded.n_qbits">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_qbits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#timeseries_qmc.models.HeisenbergBonded.n_qbits" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited property. see <a class="reference internal" href="#timeseries_qmc.models.Model.n_qbits" title="timeseries_qmc.models.Model.n_qbits"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Model.n_qbits</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="timeseries_qmc.models.HeisenbergBonded.n_terms">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_terms</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#timeseries_qmc.models.HeisenbergBonded.n_terms" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited property. see <a class="reference internal" href="#timeseries_qmc.models.Model.n_terms" title="timeseries_qmc.models.Model.n_terms"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Model.n_terms</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="timeseries_qmc.models.HeisenbergXYZ">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">timeseries_qmc.models.</span></span><span class="sig-name descname"><span class="pre">HeisenbergXYZ</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">xx_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yy_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zz_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'xyz'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.models.HeisenbergXYZ" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#timeseries_qmc.models.Model" title="timeseries_qmc.models._model.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a></p>
+<p>Class for handling Trotterized time evolution of a general Heisenberg model.
+Tortterization is done by seperating X, Y and Z terms giving in total 3 Trotter terms.
+For an alternative Trotterization, see <a class="reference internal" href="#timeseries_qmc.models.HeisenbergBonded" title="timeseries_qmc.models.HeisenbergBonded"><code class="xref py py-class docutils literal notranslate"><span class="pre">HeisenbergBonded</span></code></a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The Trotterization of this model does not conserve the total Sz symmetry even when Jx=Jy.
+In that case, use <a class="reference internal" href="#timeseries_qmc.models.HeisenbergBonded" title="timeseries_qmc.models.HeisenbergBonded"><code class="xref py py-class docutils literal notranslate"><span class="pre">HeisenbergBonded</span></code></a> model instead.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>L</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of spins</p></li>
+<li><p><strong>xx_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of lists specifying the XX interaction part of the hamiltonian.
+The first element of each list is a float representing the coupling strength.
+The other two elements are integers representing the interacting sites.</p></li>
+<li><p><strong>yy_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of lists specifying the YY interaction part of the hamiltonian.
+The first element of each list is a float representing the coupling strength.
+The other two elements are integers representing the interacting sites.</p></li>
+<li><p><strong>zz_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of lists specifying the ZZ interaction part of the hamiltonian.
+The first element of each list is a float representing the coupling strength.
+The other two elements are integers representing the interacting sites.</p></li>
+<li><p><strong>z_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of lists specifying the Z part of the hamiltonian.
+The first element of each list is a float representing the strength of magnatic field.
+The other element is an integer representing the site.</p></li>
+<li><p><strong>order</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – Specifies whether the X or Y or Z parts should be applied first in Trotterization.
+Value can be any permutation of the string ‘xyz’.
+Default value is ‘xyz’.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.HeisenbergXYZ.append_gates">
+<span class="sig-name descname"><span class="pre">append_gates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><span class="pre">Circuit</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">term</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_controls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#timeseries_qmc.models.HeisenbergXYZ.append_gates" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited method. See <a class="reference internal" href="#timeseries_qmc.models.Model.append_gates" title="timeseries_qmc.models.Model.append_gates"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Model.append_gates()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.HeisenbergXYZ.from_coupling_list">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_coupling_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupling_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Jxx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">Jyy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">Jzz</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hz</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'xyz'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.models.HeisenbergXYZ.from_coupling_list" title="Permalink to this definition"></a></dt>
+<dd><p>Shortcut method for creating an instance from a coupling list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>L</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of spins.</p></li>
+<li><p><strong>coupling_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of lists specifying the lattice bonds.
+Each list has two integers representing the sites of the bond.</p></li>
+<li><p><strong>Jxx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Coupling strength in X direction.</p></li>
+<li><p><strong>Jyy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Coupling strength in Y direction.</p></li>
+<li><p><strong>Jzz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Coupling strength in Z direction.</p></li>
+<li><p><strong>hz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Strength of magnatic field in Z direction.</p></li>
+<li><p><strong>order</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – Specifies whether the X or Y or Z parts should be applied first in Trotterization.
+Value can be any permutation of the string ‘xyz’.
+Default value is ‘xyz’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>model</strong> – Heisneberg model with the specified bonds and parameters.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#timeseries_qmc.models.HeisenbergXYZ" title="timeseries_qmc.models.HeisenbergXYZ"><code class="xref py py-class docutils literal notranslate"><span class="pre">HeisenbergXYZ</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.HeisenbergXYZ.from_lattice">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_lattice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.models.lattice.Lattice.html#tenpy.models.lattice.Lattice" title="(in TeNPy v0.10.0)"><span class="pre">Lattice</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">Jxx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">Jyy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">Jzz</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hz</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'xyz'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.models.HeisenbergXYZ.from_lattice" title="Permalink to this definition"></a></dt>
+<dd><p>Shortcut method for creating an instance from a lattice.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lattice</strong> (<a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.models.lattice.Lattice.html#tenpy.models.lattice.Lattice" title="(in TeNPy v0.10.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tenpy.models.lattice.Lattice</span></code></a>) – List of lists specifying the lattice bonds.
+Each list has two integers representing the sites of the bond.</p></li>
+<li><p><strong>Jxx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Coupling strength in X direction.</p></li>
+<li><p><strong>Jyy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Coupling strength in Y direction.</p></li>
+<li><p><strong>Jzz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Coupling strength in Z direction.</p></li>
+<li><p><strong>hz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Strength of magnatic field in Z direction.</p></li>
+<li><p><strong>order</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – Specifies whether the X or Y or Z parts should be applied first in Trotterization.
+Value can be any permutation of the string ‘xyz’.
+Default value is ‘xyz’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>model</strong> – Heisneberg model with the specified bonds and parameters.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#timeseries_qmc.models.HeisenbergXYZ" title="timeseries_qmc.models.HeisenbergXYZ"><code class="xref py py-class docutils literal notranslate"><span class="pre">HeisenbergXYZ</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.HeisenbergXYZ.get_hamiltonian">
+<span class="sig-name descname"><span class="pre">get_hamiltonian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">term</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">hamiltonian</span></span></span><a class="headerlink" href="#timeseries_qmc.models.HeisenbergXYZ.get_hamiltonian" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited method. See <a class="reference internal" href="#timeseries_qmc.models.Model.get_hamiltonian" title="timeseries_qmc.models.Model.get_hamiltonian"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Model.get_hamiltonian()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="timeseries_qmc.models.HeisenbergXYZ.n_qbits">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_qbits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#timeseries_qmc.models.HeisenbergXYZ.n_qbits" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited property. see <a class="reference internal" href="#timeseries_qmc.models.Model.n_qbits" title="timeseries_qmc.models.Model.n_qbits"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Model.n_qbits</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="timeseries_qmc.models.HeisenbergXYZ.n_terms">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_terms</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#timeseries_qmc.models.HeisenbergXYZ.n_terms" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited property. see <a class="reference internal" href="#timeseries_qmc.models.Model.n_terms" title="timeseries_qmc.models.Model.n_terms"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Model.n_terms</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Ising">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">timeseries_qmc.models.</span></span><span class="sig-name descname"><span class="pre">Ising</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">zz_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">which_first</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'zz'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.models.Ising" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#timeseries_qmc.models.Model" title="timeseries_qmc.models._model.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a></p>
+<p>Class for obtaining quantum circuit Trotterized time evolution of a Transferse-field Ising model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>L</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of spins</p></li>
+<li><p><strong>zz_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of lists specifying the ZZ interaction part of the hamiltonian.
+The first element of each list is a float representing the coupling strength.
+The other two elements are integers representing the interacting sites.</p></li>
+<li><p><strong>x_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of lists specifying the X part of the hamiltonian.
+The first element of each list is a float representing the strength of magnatic field.
+The other element is an integer representing the site.</p></li>
+<li><p><strong>which_first</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – Specifies whether the ZZ part or the X part should be applied first in Trotterization.
+Value can be either ‘zz’ or ‘x’. Default value is ‘zz’.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Ising.append_gates">
+<span class="sig-name descname"><span class="pre">append_gates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><span class="pre">Circuit</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">term</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_controls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#timeseries_qmc.models.Ising.append_gates" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited method. See <a class="reference internal" href="#timeseries_qmc.models.Model.append_gates" title="timeseries_qmc.models.Model.append_gates"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Model.append_gates()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Ising.from_coupling_list">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_coupling_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupling_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Jzz</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">which_first</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'zz'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.models.Ising.from_coupling_list" title="Permalink to this definition"></a></dt>
+<dd><p>Shortcut method for creating an instance from a coupling list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>L</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of spins.</p></li>
+<li><p><strong>coupling_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of lists specifying the lattice bonds.
+Each list has two integers representing the sites of the bond.</p></li>
+<li><p><strong>Jzz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Coupling strength in Z direction.</p></li>
+<li><p><strong>hx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Strength of magnatic field in X direction.</p></li>
+<li><p><strong>which_first</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – Specifies whether the ZZ part or the X part should be applied first in Trotterization.
+Value can be either ‘zz’ or ‘x’. Default value is ‘zz’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>model</strong> – Ising model with the specified bonds and parameters.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#timeseries_qmc.models.Ising" title="timeseries_qmc.models.Ising"><code class="xref py py-class docutils literal notranslate"><span class="pre">Ising</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Ising.from_lattice">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_lattice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.models.lattice.Lattice.html#tenpy.models.lattice.Lattice" title="(in TeNPy v0.10.0)"><span class="pre">Lattice</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">Jzz</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">which_first</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'zz'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.models.Ising.from_lattice" title="Permalink to this definition"></a></dt>
+<dd><p>Shortcut method for creating an instance from a lattice.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lattice</strong> (<a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.models.lattice.Lattice.html#tenpy.models.lattice.Lattice" title="(in TeNPy v0.10.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tenpy.models.lattice.Lattice</span></code></a>) – List of lists specifying the lattice bonds.
+Each list has two integers representing the sites of the bond.</p></li>
+<li><p><strong>Jzz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Coupling strength in Z direction.</p></li>
+<li><p><strong>hx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Strength of magnatic field in X direction.</p></li>
+<li><p><strong>which_first</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – Specifies whether the ZZ part or the X part should be applied first in Trotterization.
+Value can be either ‘zz’ or ‘x’. Default value is ‘zz’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>model</strong> – Ising model with the specified bonds and parameters.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#timeseries_qmc.models.Ising" title="timeseries_qmc.models.Ising"><code class="xref py py-class docutils literal notranslate"><span class="pre">Ising</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Ising.get_hamiltonian">
+<span class="sig-name descname"><span class="pre">get_hamiltonian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">term</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">hamiltonian</span></span></span><a class="headerlink" href="#timeseries_qmc.models.Ising.get_hamiltonian" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited method. See <a class="reference internal" href="#timeseries_qmc.models.Model.get_hamiltonian" title="timeseries_qmc.models.Model.get_hamiltonian"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Model.get_hamiltonian()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Ising.n_qbits">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_qbits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#timeseries_qmc.models.Ising.n_qbits" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited property. see <a class="reference internal" href="#timeseries_qmc.models.Model.n_qbits" title="timeseries_qmc.models.Model.n_qbits"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Model.n_qbits</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Ising.n_terms">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_terms</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#timeseries_qmc.models.Ising.n_terms" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited property. see <a class="reference internal" href="#timeseries_qmc.models.Model.n_terms" title="timeseries_qmc.models.Model.n_terms"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Model.n_terms</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Model">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">timeseries_qmc.models.</span></span><span class="sig-name descname"><span class="pre">Model</span></span><a class="headerlink" href="#timeseries_qmc.models.Model" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
+<p>Abstract base class representing a Trotterized model Hamiltonian.
+It can be used to obtian its quantum circuits, Quspin operators and other properites.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Model.append_gates">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">append_gates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><span class="pre">Circuit</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">term</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_controls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#timeseries_qmc.models.Model.append_gates" title="Permalink to this definition"></a></dt>
+<dd><p>Append gates that implements the time evolution according to specified term of the Hamiltonian.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>qc</strong> (<a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytket.Circuit</span></code></a>) – Circuit to append the gates to.</p></li>
+<li><p><strong>term</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Index of the Hamiltonian term.</p></li>
+<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Time to evolve.</p></li>
+<li><p><strong>n_controls</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The number of ancillary control qbits in the circuit. If greater than zero, a controlled verison of gates
+are appended. The method is free to distribuit the control on these qbits to maximize parallel excuation.
+The control qbits are assumed to be the first qbits in the circuit.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Model.calc_boltzmann_weight">
+<span class="sig-name descname"><span class="pre">calc_boltzmann_weight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#timeseries_qmc.models.Model.calc_boltzmann_weight" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the Boltzmann weight of a state and its local energy moments at the specified invserse
+temperature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>psi</strong> (<a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – State vector <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>.</p></li>
+<li><p><strong>beta</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Inverse temperature <span class="math notranslate nohighlight">\(\beta\)</span>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>w</strong> (<em>float</em>) – Boltzmann weight <span class="math notranslate nohighlight">\(\langle\psi| e^{-\beta H}|\psi \rangle\)</span>.</p></li>
+<li><p><strong>e</strong> (<em>float</em>) – Local value of energy <span class="math notranslate nohighlight">\({\langle\psi| e^{-\beta H} H |\psi \rangle}/
+{\langle\psi| e^{\beta H}|\psi \rangle}\)</span>.</p></li>
+<li><p><strong>e_sq</strong> (<em>float</em>) – Local value of energy’s second moment <span class="math notranslate nohighlight">\({\langle\psi| e^{-\beta H} H^2 |\psi \rangle}/
+{\langle\psi| e^{\beta H}|\psi \rangle}\)</span>.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Model.calc_energy_mean">
+<span class="sig-name descname"><span class="pre">calc_energy_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></span><a class="headerlink" href="#timeseries_qmc.models.Model.calc_energy_mean" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the energy expectation value for the specified state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>psi</strong> (<a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – State vector <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>result</strong> – Energy expectation value <span class="math notranslate nohighlight">\(\langle\psi| H |\psi \rangle\)</span>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Model.calc_energy_moment">
+<span class="sig-name descname"><span class="pre">calc_energy_moment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></span><a class="headerlink" href="#timeseries_qmc.models.Model.calc_energy_moment" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the expectation value of the n-th power of the Hamiltonian for the specified state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>psi</strong> (<a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – State vector <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>.</p></li>
+<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – power of the Hamiltonian <span class="math notranslate nohighlight">\(n\)</span>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>result</strong> – Expectation value <span class="math notranslate nohighlight">\(\langle\psi| H^n |\psi \rangle\)</span>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Model.calc_energy_variance">
+<span class="sig-name descname"><span class="pre">calc_energy_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></span><a class="headerlink" href="#timeseries_qmc.models.Model.calc_energy_variance" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the energy variance for the specified state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>psi</strong> (<a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – State vector <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>result</strong> – Energy variance <span class="math notranslate nohighlight">\(\langle\psi| H^2 |\psi \rangle - \langle\psi| H |\psi \rangle^2\)</span>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Model.calc_thermal_observables">
+<span class="sig-name descname"><span class="pre">calc_thermal_observables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#timeseries_qmc.models.Model.calc_thermal_observables" title="Permalink to this definition"></a></dt>
+<dd><p>Calculates the magnetizaiton squared and the first two moments of energy at a finite temperature.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This performes an exact diagonalization of the full hamiltonain, so it should be used only for
+small system sizes.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>beta</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Inverse temperature <span class="math notranslate nohighlight">\(\beta\)</span>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>M2</strong> (<em>float</em>) – Magnetization squared: <span class="math notranslate nohighlight">\(\operatorname{Tr} \left[e^{-\beta H} (\sum_i Z_i)^2\right]/
+\operatorname{Tr} \left[e^{-\beta H}\right]\)</span>.</p></li>
+<li><p><strong>E</strong> (<em>flaot</em>) – Energy: <span class="math notranslate nohighlight">\(\operatorname{Tr} \left[e^{-\beta H} H\right]/
+\operatorname{Tr} \left[e^{-\beta H}\right]\)</span>.</p></li>
+<li><p><strong>E2</strong> (<em>float</em>) – Energy squared: <span class="math notranslate nohighlight">\(\operatorname{Tr} \left[e^{-\beta H} H^2\right]/
+\operatorname{Tr} \left[e^{-\beta H}\right]\)</span>.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Model.evolve_state_1st_trotter">
+<span class="sig-name descname"><span class="pre">evolve_state_1st_trotter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></span><a class="headerlink" href="#timeseries_qmc.models.Model.evolve_state_1st_trotter" title="Permalink to this definition"></a></dt>
+<dd><p>Apply the 1st-order Trotterized time evolution of the model on a state and return the evolved state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>psi</strong> (<a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – State vector <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>.</p></li>
+<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Time to evolve <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
+<li><p><strong>n_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of Trotter steps <span class="math notranslate nohighlight">\(n\)</span>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>psi_t</strong> – Evolved state vector <span class="math notranslate nohighlight">\(U_1^n(t)|\psi\rangle\)</span>,
+where <span class="math notranslate nohighlight">\(U_1(t) := e^{-i A t/n}e^{-i B t/n}\dots e^{-i D t/n}\)</span> is first-order Trotterization of
+Hamiltonain with non-commuting terms <span class="math notranslate nohighlight">\(A, B, \dots, D\)</span>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Model.evolve_state_2nd_trotter">
+<span class="sig-name descname"><span class="pre">evolve_state_2nd_trotter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></span><a class="headerlink" href="#timeseries_qmc.models.Model.evolve_state_2nd_trotter" title="Permalink to this definition"></a></dt>
+<dd><p>Apply the 2nd-order Trotterized time evolution of the model on a state and return the evolved state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>psi</strong> (<a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – State vector <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>.</p></li>
+<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Time to evolve <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
+<li><p><strong>n_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of Trotter steps <span class="math notranslate nohighlight">\(n\)</span>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>psi_t</strong> – Evolved state vector <span class="math notranslate nohighlight">\(U_2^n(t)|\psi\rangle\)</span>,
+where <span class="math notranslate nohighlight">\(U_2(t) := e^{-i A t/(2n)}e^{-i B t/(2n)}\dots e^{-i D t/n}\dots e^{-i B t/(2n)}e^{-i A t/(2n)}\)</span>
+is second-order Trotterization of Hamiltonain with non-commuting terms <span class="math notranslate nohighlight">\(A, B, \dots, D\)</span>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Model.evolve_state_exact">
+<span class="sig-name descname"><span class="pre">evolve_state_exact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></span><a class="headerlink" href="#timeseries_qmc.models.Model.evolve_state_exact" title="Permalink to this definition"></a></dt>
+<dd><p>Apply the exact time evolution of the model on a state and return the evolved state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>psi</strong> (<a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – State vector <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>.</p></li>
+<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Time to evolve <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>psi_t</strong> – Evolved state vector <span class="math notranslate nohighlight">\(e^{-iHt} |\psi\rangle\)</span></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Model.get_full_hamiltonian">
+<span class="sig-name descname"><span class="pre">get_full_hamiltonian</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">hamiltonian</span></span></span><a class="headerlink" href="#timeseries_qmc.models.Model.get_full_hamiltonian" title="Permalink to this definition"></a></dt>
+<dd><p>Prepare a QuSpin operator representing the full Hamiltonian.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>h</strong></p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://quspin.github.io/QuSpin/generated/quspin.operators.hamiltonian.html#quspin.operators.hamiltonian" title="(in QuSpin v0.3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">quspin.operators.hamiltonian</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Model.get_hamiltonian">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_hamiltonian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">term</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">hamiltonian</span></span></span><a class="headerlink" href="#timeseries_qmc.models.Model.get_hamiltonian" title="Permalink to this definition"></a></dt>
+<dd><p>Prepare a QuSpin operator representing the specified term of the Hamiltonian.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>term</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Index of the Hamiltonain term.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>h_term</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://quspin.github.io/QuSpin/generated/quspin.operators.hamiltonian.html#quspin.operators.hamiltonian" title="(in QuSpin v0.3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">quspin.operators.hamiltonian</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Model.make_1st_trotter_circuit">
+<span class="sig-name descname"><span class="pre">make_1st_trotter_circuit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_controls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><span class="pre">Circuit</span></a></span></span><a class="headerlink" href="#timeseries_qmc.models.Model.make_1st_trotter_circuit" title="Permalink to this definition"></a></dt>
+<dd><p>Return a pytket circuit that implements the 1st-order Trotterized time evolution of the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of Trotter steps <span class="math notranslate nohighlight">\(n\)</span>.</p></li>
+<li><p><strong>dt</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Trotter step size <span class="math notranslate nohighlight">\(\delta t\)</span>.</p></li>
+<li><p><strong>n_controls</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The number of ancillary control qbits in the circuit. If greater than zero, return the circuit with an
+extra qbits for controlling the gates. The method is free to distribuit the control on these qbits to
+maximize parallel excuation.The control qbits are assumed to be the first qbits in the circuit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>circuit</strong> – Circuit implementing first-order Trotterization  <span class="math notranslate nohighlight">\(\left[e^{-i D \delta t} \dots e^{-i B \delta t}
+e^{-i A \delta t}\right]^n\)</span>
+where <span class="math notranslate nohighlight">\(A, B, \dots, D\)</span> are non-commuting terms  of the Hamiltonain.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytket.Circuit</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Model.make_2nd_trotter_circuit">
+<span class="sig-name descname"><span class="pre">make_2nd_trotter_circuit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_controls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><span class="pre">Circuit</span></a></span></span><a class="headerlink" href="#timeseries_qmc.models.Model.make_2nd_trotter_circuit" title="Permalink to this definition"></a></dt>
+<dd><p>Return a pytket circuit that implements the 2nd-order Trotterized time evolution of the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of Trotter steps <span class="math notranslate nohighlight">\(n\)</span>.</p></li>
+<li><p><strong>dt</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Trotter step size <span class="math notranslate nohighlight">\(\delta t\)</span>.</p></li>
+<li><p><strong>n_controls</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The number of ancillary control qbits in the circuit. If greater than zero, return the circuit with an
+extra qbits for controlling the gates. The method is free to distribuit the control on these qbits to
+maximize parallel excuation. The control qbits are assumed to be the first qbits in the circuit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>circuit</strong> – Circuit implementing second-order Trotterization  <span class="math notranslate nohighlight">\(\left[e^{-i A \delta t/2}e^{-i B \delta t/2}\dots
+e^{-i D \delta t}\dots e^{-i B \delta t/2}e^{-i A \delta t/2}\right]^n\)</span>
+where <span class="math notranslate nohighlight">\(A, B, \dots, D\)</span> are non-commuting terms  of the Hamiltonain.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytket.Circuit</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Model.make_amplitude_circuit">
+<span class="sig-name descname"><span class="pre">make_amplitude_circuit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi_circuit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><span class="pre">Circuit</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">trotter_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><span class="pre">Circuit</span></a></span></span><a class="headerlink" href="#timeseries_qmc.models.Model.make_amplitude_circuit" title="Permalink to this definition"></a></dt>
+<dd><p>Return a pytket circuit that calculates the squared amplitude of Loschmidt echo for the specified state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>psi_circuit</strong> (<a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytket.Circuit</span></code></a>) – Circuit for transforming the <span class="math notranslate nohighlight">\(|0\dots0\rangle\)</span> state into <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>.</p></li>
+<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Time to evolve <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
+<li><p><strong>n_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of Trotter steps <span class="math notranslate nohighlight">\(n\)</span>.</p></li>
+<li><p><strong>trotter_order</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The order of Tortterization <span class="math notranslate nohighlight">\(p\)</span>. Currently, only 1st and 2nd orders are supported.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>circuit</strong> – Amplitude circuit for measuring <span class="math notranslate nohighlight">\(|\langle\psi| e^{-i t E} U_p^n(t) |\psi\rangle|^2\)</span>
+where <span class="math notranslate nohighlight">\(U_1(t) := e^{-i D t/n}\dots e^{-i B t/n}e^{-i A t/n}\)</span> is first-order Trotterization,
+<span class="math notranslate nohighlight">\(U_2(t) := e^{-i A t/(2n)}e^{-i B t/(2n)}\dots e^{-i D t/n}\dots e^{-i B t/(2n)}e^{-i A t/(2n)}\)</span>
+is second-order Trotterization and <span class="math notranslate nohighlight">\(A, B, \dots, D\)</span> are non-commuting terms  of the Hamiltonain.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytket.Circuit</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Model.make_cat_circuit">
+<span class="sig-name descname"><span class="pre">make_cat_circuit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi_bitstring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">trotter_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imaginary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energy_shift</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_preperation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><span class="pre">Circuit</span></a></span></span><a class="headerlink" href="#timeseries_qmc.models.Model.make_cat_circuit" title="Permalink to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>Return a pytket circuit that implements the catstate trick for calculating Loschmidt echo for the specified</dt><dd><p>state.</p>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This method assumes that the state <span class="math notranslate nohighlight">\(|0\dots0\rangle\)</span> is an eigenstate of the model.
+Otherwise, the results are unpredictable.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>psi_bitstring</strong> (list or <a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – List/array of zeros and ones representing some product state <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>.</p></li>
+<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Time to evolve <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
+<li><p><strong>n_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of Trotter steps <span class="math notranslate nohighlight">\(n\)</span>.</p></li>
+<li><p><strong>trotter_order</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The order of Tortterization <span class="math notranslate nohighlight">\(p\)</span>. Currently, only 1st and 2nd orders are supported.</p></li>
+<li><p><strong>imaginary</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If ‘True’, return the circuit measuring the imaginary part of Loschmidt echo.
+Otherwise, return the circuit for the real part.</p></li>
+<li><p><strong>energy_shift</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Value to be used for shifting the zero energy of the Hamiltonian <span class="math notranslate nohighlight">\(E\)</span>. Default value is zero.</p></li>
+<li><p><strong>log_preperation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to use a circuit of logarithmic depth for prepering the cat state.
+Deafult value is true (recommended).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>circuit</strong> – Catstate circuit for measuring the real or imaginary part of
+<span class="math notranslate nohighlight">\(\langle\psi| e^{-i t E} U_p^n(t) |\psi\rangle\)</span>
+where <span class="math notranslate nohighlight">\(U_1(t) := e^{-i D t/n}\dots e^{-i B t/n}e^{-i A t/n}\)</span> is first-order Trotterization,
+<span class="math notranslate nohighlight">\(U_2(t) := e^{-i A t/(2n)}e^{-i B t/(2n)}\dots e^{-i D t/n}\dots e^{-i B t/(2n)}e^{-i A t/(2n)}\)</span> is
+second-order Trotterization and <span class="math notranslate nohighlight">\(A, B, \dots, D\)</span> are non-commuting terms  of the Hamiltonain.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytket.Circuit</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Model.make_hadamard_circuit">
+<span class="sig-name descname"><span class="pre">make_hadamard_circuit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi_circuit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><span class="pre">Circuit</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">trotter_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_optimized_control</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_controls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imaginary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energy_shift</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><span class="pre">Circuit</span></a></span></span><a class="headerlink" href="#timeseries_qmc.models.Model.make_hadamard_circuit" title="Permalink to this definition"></a></dt>
+<dd><p>Return a pytket circuit that implements the Hadamard test using specified Trotterization of H.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>psi_circuit</strong> (<a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytket.Circuit</span></code></a>) – Circuit for transforming the <span class="math notranslate nohighlight">\(|0\dots0\rangle\)</span> state into <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>.</p></li>
+<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Time to evolve <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
+<li><p><strong>n_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of Trotter steps <span class="math notranslate nohighlight">\(n\)</span>.</p></li>
+<li><p><strong>trotter_order</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The order of Tortterization:math:<cite>p</cite>. Currently, only 1st and 2nd orders are supported.</p></li>
+<li><p><strong>split</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to split 2nd-order Trotter cicuit or not. See <a class="reference internal" href="#timeseries_qmc.models.Model.make_split_2nd_trotter_circuits" title="timeseries_qmc.models.Model.make_split_2nd_trotter_circuits"><code class="xref py py-meth docutils literal notranslate"><span class="pre">make_split_2nd_trotter_circuits()</span></code></a> for details.
+This paramter is ignored for 1st-order circuits.</p></li>
+<li><p><strong>use_optimized_control</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to use manually-optimized controlled gates or rely on pytket QControlBox.</p></li>
+<li><p><strong>n_controls</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The number of ancillary control qbits in the circuit. Using more than one control qbit has the potential of
+speed-up by parallelizing excution of controlled gates.
+If ‘use_optimized_control’ is False, this value is ignored and only one control qbit is used.
+The control qbits are the first qbits in the circuit.</p></li>
+<li><p><strong>imaginary</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If ‘True’, return the circuit measuring the imaginary part of Loschmidt echo. Otherwise, return the circuit
+for the real part.</p></li>
+<li><p><strong>energy_shift</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Value to be used for shifting the zero energy of the Hamiltonian <span class="math notranslate nohighlight">\(E\)</span>. Default value is zero.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>circuit</strong> – Hadmard circuit for measuring the real or imaginary part of
+<span class="math notranslate nohighlight">\(\langle\psi| e^{-i t E} U_p^n(t) |\psi\rangle\)</span>
+where <span class="math notranslate nohighlight">\(U_1(t) := e^{-i D t/n}\dots e^{-i B t/n}e^{-i A t/n}\)</span> is first-order Trotterization,
+<span class="math notranslate nohighlight">\(U_2(t) := e^{-i A t/(2n)}e^{-i B t/(2n)}\dots e^{-i D t/n}\dots e^{-i B t/(2n)}e^{-i A t/(2n)}\)</span> is
+second-order Trotterization and <span class="math notranslate nohighlight">\(A, B, \dots, D\)</span> are non-commuting terms  of the Hamiltonain.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytket.Circuit</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Model.make_split_2nd_trotter_circuits">
+<span class="sig-name descname"><span class="pre">make_split_2nd_trotter_circuits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_controls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><span class="pre">pytket._tket.circuit.Circuit</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><span class="pre">pytket._tket.circuit.Circuit</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#timeseries_qmc.models.Model.make_split_2nd_trotter_circuits" title="Permalink to this definition"></a></dt>
+<dd><p>Return pytket circuits that implements the splitted 2nd-order Trotterized time evolution of the model.</p>
+<p><strong>Example</strong> A second-order Trotterization <span class="math notranslate nohighlight">\([e^{-i A \delta t/2} e^{-i B \delta t} e^{-i A \delta t/2}]^n\)</span>
+can written as <span class="math notranslate nohighlight">\(e^{i A \delta t/2} [e^{-i A \delta t} e^{-i B  \delta t}]^n e^{-i A \delta t/2}\)</span>.
+This splitting is useful because it allows performing the Hadamard test
+by controlling only the circuit of <span class="math notranslate nohighlight">\([e^{-i A \delta t} e^{-i B  \delta t}]^n\)</span> while considering the
+circuit of <span class="math notranslate nohighlight">\(e^{-i A \delta t/2}\)</span> as part of state preperation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of Trotter steps <span class="math notranslate nohighlight">\(n\)</span>.</p></li>
+<li><p><strong>dt</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Trotter step size <span class="math notranslate nohighlight">\(\delta t\)</span>.</p></li>
+<li><p><strong>n_controls</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The number of ancillary control qbits in the circuit. If greater than zero, return the circuit with an
+extra qbits for controlling the gates. The method is free to distribuit the control on these qbits to
+maximize parallel excuation. The control qbits are assumed to be the first qbits in the circuit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>main_circuit</strong> (<a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytket.Circuit</span></code></a>) – Circuit implementing the Trotterization <span class="math notranslate nohighlight">\(\left[e^{-i C \delta t/2} \dots e^{-i B \delta t/2}
+e^{-i A \delta t} e^{-i B \delta t/2} \dots e^{-i C \delta t/2} e^{-i D \delta} \right]^n\)</span>
+where <span class="math notranslate nohighlight">\(A, B, \dots, C, D\)</span> are non-commuting terms  of the Hamiltonain.</p></li>
+<li><p><strong>residue_circuit</strong> (<a class="reference external" href="https://cqcl.github.io/tket/pytket/api/circuit_class.html#pytket._tket.circuit.Circuit" title="(in pytket v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytket.Circuit</span></code></a>) – Circuit implementing the Trotterization <span class="math notranslate nohighlight">\(\left[e^{-i C \delta t/2}  \dots e^{-i B \delta t/2}
+e^{-i A \delta t/2} \right]\)</span>.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Model.n_qbits">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_qbits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#timeseries_qmc.models.Model.n_qbits" title="Permalink to this definition"></a></dt>
+<dd><p>Number of qubits necessary for representing a state of this model.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="timeseries_qmc.models.Model.n_terms">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_terms</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#timeseries_qmc.models.Model.n_terms" title="Permalink to this definition"></a></dt>
+<dd><p>Number of non-commutative terms in the Hamilatonian.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="timeseries_qmc.mitigation.html" class="btn btn-neutral float-left" title="timeseries_qmc.mitigation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="timeseries_qmc.sampling.html" class="btn btn-neutral float-right" title="timeseries_qmc.sampling" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Quantinuum GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

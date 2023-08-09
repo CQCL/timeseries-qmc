@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>timeseries_qmc.sampling &mdash; TimeseriesQMC 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/jupyter-sphinx.css" type="text/css" />
+      <link rel="stylesheet" href="_static/thebelab.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script src="_static/thebelab-helper.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="timeseries_qmc.utils" href="timeseries_qmc.utils.html" />
+    <link rel="prev" title="timeseries_qmc.models" href="timeseries_qmc.models.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            TimeseriesQMC
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.boltzmann.html">timeseries_qmc.boltzmann</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.loschmidt.html">timeseries_qmc.loschmidt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.mitigation.html">timeseries_qmc.mitigation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.models.html">timeseries_qmc.models</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">timeseries_qmc.sampling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.sampling.ClusterUpdate"><code class="docutils literal notranslate"><span class="pre">ClusterUpdate</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.sampling.ClusterUpdate.propose_sample"><code class="docutils literal notranslate"><span class="pre">ClusterUpdate.propose_sample()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.sampling.KagomeClusterUpdate"><code class="docutils literal notranslate"><span class="pre">KagomeClusterUpdate</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.sampling.KagomeClusterUpdate.propose_sample"><code class="docutils literal notranslate"><span class="pre">KagomeClusterUpdate.propose_sample()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.sampling.MarkovChain"><code class="docutils literal notranslate"><span class="pre">MarkovChain</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.sampling.MarkovChain.acceptance_rate"><code class="docutils literal notranslate"><span class="pre">MarkovChain.acceptance_rate</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.sampling.MarkovChain.current_sample"><code class="docutils literal notranslate"><span class="pre">MarkovChain.current_sample</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.sampling.MarkovChain.distinct_samples_count"><code class="docutils literal notranslate"><span class="pre">MarkovChain.distinct_samples_count</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.sampling.MarkovChain.distinct_samples_ratio"><code class="docutils literal notranslate"><span class="pre">MarkovChain.distinct_samples_ratio</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.sampling.MarkovChain.generate_next_sample"><code class="docutils literal notranslate"><span class="pre">MarkovChain.generate_next_sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.sampling.MarkovChain.generated_samples_count"><code class="docutils literal notranslate"><span class="pre">MarkovChain.generated_samples_count</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.sampling.MarkovChain.get_boltzmann_weights"><code class="docutils literal notranslate"><span class="pre">MarkovChain.get_boltzmann_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.sampling.MarkovChain.get_local_energies"><code class="docutils literal notranslate"><span class="pre">MarkovChain.get_local_energies()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.sampling.MarkovChain.get_local_energies_squared"><code class="docutils literal notranslate"><span class="pre">MarkovChain.get_local_energies_squared()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.sampling.MarkovChain.get_magnetziations_squared"><code class="docutils literal notranslate"><span class="pre">MarkovChain.get_magnetziations_squared()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.sampling.MarkovChain.get_samples"><code class="docutils literal notranslate"><span class="pre">MarkovChain.get_samples()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.sampling.MarkovChain.load"><code class="docutils literal notranslate"><span class="pre">MarkovChain.load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.sampling.MarkovChain.save"><code class="docutils literal notranslate"><span class="pre">MarkovChain.save()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.sampling.Sampler"><code class="docutils literal notranslate"><span class="pre">Sampler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.sampling.Sampler.propose_sample"><code class="docutils literal notranslate"><span class="pre">Sampler.propose_sample()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.sampling.SingleFlip"><code class="docutils literal notranslate"><span class="pre">SingleFlip</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timeseries_qmc.sampling.SingleFlip.propose_sample"><code class="docutils literal notranslate"><span class="pre">SingleFlip.propose_sample()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseries_qmc.sampling.generate_chain"><code class="docutils literal notranslate"><span class="pre">generate_chain()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="timeseries_qmc.utils.html">timeseries_qmc.utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">TimeseriesQMC</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="api.html">API Documentation</a></li>
+      <li class="breadcrumb-item active">timeseries_qmc.sampling</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/timeseries_qmc.sampling.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="timeseries-qmc-sampling">
+<h1>timeseries_qmc.sampling<a class="headerlink" href="#timeseries-qmc-sampling" title="Permalink to this heading"></a></h1>
+<figure class="align-default" id="id1">
+<span id="sampling"></span><div class="graphviz"><object data="_images/inheritance-6746bfdff78d8f450e2f2339bc0c5eaf3e7c54e9.svg" type="image/svg+xml" class="inheritance graphviz">
+<p class="warning">Inheritance diagram of timeseries_qmc.sampling.SingleFlip, timeseries_qmc.sampling.ClusterUpdate, timeseries_qmc.sampling.KagomeClusterUpdate</p></object></div>
+<figcaption>
+<p><span class="caption-text">Samplers of Quantum States</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<span class="target" id="module-timeseries_qmc.sampling"></span><dl class="py class">
+<dt class="sig sig-object py" id="timeseries_qmc.sampling.ClusterUpdate">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">timeseries_qmc.sampling.</span></span><span class="sig-name descname"><span class="pre">ClusterUpdate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">J</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupling_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lattice</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.models.lattice.Lattice.html#tenpy.models.lattice.Lattice" title="(in TeNPy v0.10.0)"><span class="pre">Lattice</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.sampling.ClusterUpdate" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#timeseries_qmc.sampling.Sampler" title="timeseries_qmc.sampling._sampler.Sampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sampler</span></code></a></p>
+<p>Sampler of spin product states using Wolff’s cluster update for classical Ising models. For details of the
+algorithm, see <em>U. Wolff, Collective monte carlo updating for spin systems,</em> <a class="reference external" href="https://doi.org/10.1103/PhysRevLett.62.361">Phys. Rev. Lett. 62, 361 (1989)</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>J</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Coupling strength.</p></li>
+<li><p><strong>beta</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Inverse temperature.</p></li>
+<li><p><strong>coupling_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of lists specifying the lattice bonds.
+Each list has two integers representing the sites of the bond.
+Either this parameter or <strong>lattice</strong> needs to be specified.
+Both parameters cannot be specified simultaneously.</p></li>
+<li><p><strong>lattice</strong> (<a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.models.lattice.Lattice.html#tenpy.models.lattice.Lattice" title="(in TeNPy v0.10.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tenpy.models.lattice.Lattice</span></code></a>) – List of lists specifying the lattice bonds.
+Each list has two integers representing the sites of the bond.
+Either this parameter or <strong>coupling_list</strong> needs to be specified.
+Both parameters cannot be specified simultaneously.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.sampling.ClusterUpdate.propose_sample">
+<span class="sig-name descname"><span class="pre">propose_sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old_sample</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/1.22/reference/random/legacy.html#numpy.random.RandomState" title="(in NumPy v1.22)"><span class="pre">RandomState</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.sampling.ClusterUpdate.propose_sample" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited method. See <a class="reference internal" href="#timeseries_qmc.sampling.Sampler.propose_sample" title="timeseries_qmc.sampling.Sampler.propose_sample"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Sampler.propose_sample()</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="timeseries_qmc.sampling.KagomeClusterUpdate">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">timeseries_qmc.sampling.</span></span><span class="sig-name descname"><span class="pre">KagomeClusterUpdate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">J</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupling_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lattice</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.models.lattice.Lattice.html#tenpy.models.lattice.Lattice" title="(in TeNPy v0.10.0)"><span class="pre">Lattice</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.sampling.KagomeClusterUpdate" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#timeseries_qmc.sampling.Sampler" title="timeseries_qmc.sampling._sampler.Sampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sampler</span></code></a></p>
+<p>Sampler of spin product states using cluster update for antiferromagnatic classical Ising model on
+Kagome lattices. For details of the algorithm, see <em>G. M. Zhang and C. Z. Yang, Cluster monte carlo dynamics for
+the antiferromagnetic ising model on a triangular lattice,</em> <a class="reference external" href="https://doi.org/10.1103/PhysRevB.50.12546">Phys. Rev. B 50, 12546 (1994)</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The lattice specified by <strong>coupling_list</strong> or <strong>lattice</strong> parameters need to be a kagome lattice.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>J</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Coupling strength.</p></li>
+<li><p><strong>beta</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Inverse temperature.</p></li>
+<li><p><strong>coupling_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of lists specifying the lattice bonds.
+Each list has two integers representing the sites of the bond.
+Either this parameter or <strong>lattice</strong> needs to be specified.
+Both parameters cannot be specified simultaneously.</p></li>
+<li><p><strong>lattice</strong> (<a class="reference external" href="https://tenpy.readthedocs.io/en/latest/reference/tenpy.models.lattice.Lattice.html#tenpy.models.lattice.Lattice" title="(in TeNPy v0.10.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tenpy.models.lattice.Lattice</span></code></a>) – List of lists specifying the lattice bonds.
+Each list has two integers representing the sites of the bond.
+Either this parameter or <strong>coupling_list</strong> needs to be specified.
+Both parameters cannot be specified simultaneously.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.sampling.KagomeClusterUpdate.propose_sample">
+<span class="sig-name descname"><span class="pre">propose_sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old_sample</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/1.22/reference/random/legacy.html#numpy.random.RandomState" title="(in NumPy v1.22)"><span class="pre">RandomState</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.sampling.KagomeClusterUpdate.propose_sample" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited method. See <a class="reference internal" href="#timeseries_qmc.sampling.Sampler.propose_sample" title="timeseries_qmc.sampling.Sampler.propose_sample"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Sampler.propose_sample()</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="timeseries_qmc.sampling.MarkovChain">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">timeseries_qmc.sampling.</span></span><span class="sig-name descname"><span class="pre">MarkovChain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">boltzmann_weight_calculator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="timeseries_qmc.boltzmann.html#timeseries_qmc.boltzmann.BoltzmannWeightCalculator" title="timeseries_qmc.boltzmann._calculator.BoltzmannWeightCalculator"><span class="pre">BoltzmannWeightCalculator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#timeseries_qmc.sampling.Sampler" title="timeseries_qmc.sampling._sampler.Sampler"><span class="pre">Sampler</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">inital_sample_bitstring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.sampling.MarkovChain" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class representing a Markov chain of time-series quantum Monte Carlo samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>boltzmann_weight_calculator</strong> (<a class="reference internal" href="timeseries_qmc.boltzmann.html#timeseries_qmc.boltzmann.BoltzmannWeightCalculator" title="timeseries_qmc.boltzmann.BoltzmannWeightCalculator"><code class="xref py py-class docutils literal notranslate"><span class="pre">boltzmann.BoltzmannWeightCalculator</span></code></a>) – Calculator of Boltzmann weights.</p></li>
+<li><p><strong>sampler</strong> (<a class="reference internal" href="#timeseries_qmc.sampling.Sampler" title="timeseries_qmc.sampling.Sampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sampler</span></code></a>) – Sampler of quantum states.</p></li>
+<li><p><strong>initia_sample_bitstring</strong> (list or <a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – List/array of zeros and ones representing initial product state.</p></li>
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Seed for the random number generator.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="timeseries_qmc.sampling.MarkovChain.acceptance_rate">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">acceptance_rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#timeseries_qmc.sampling.MarkovChain.acceptance_rate" title="Permalink to this definition"></a></dt>
+<dd><p>Acceptance ratio of proposed samples.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This value is <code class="docutils literal notranslate"><span class="pre">None</span></code> when no sample has been generated so far.</p>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="timeseries_qmc.sampling.MarkovChain.current_sample">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">current_sample</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#timeseries_qmc.sampling.MarkovChain.current_sample" title="Permalink to this definition"></a></dt>
+<dd><p>Bitstring of zeros and ones representing last generated product state.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="timeseries_qmc.sampling.MarkovChain.distinct_samples_count">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distinct_samples_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#timeseries_qmc.sampling.MarkovChain.distinct_samples_count" title="Permalink to this definition"></a></dt>
+<dd><p>Total number of <em>unique</em> samples generated sofar.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="timeseries_qmc.sampling.MarkovChain.distinct_samples_ratio">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distinct_samples_ratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#timeseries_qmc.sampling.MarkovChain.distinct_samples_ratio" title="Permalink to this definition"></a></dt>
+<dd><p>Ratio of distinct samples to the total number of generated samples.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.sampling.MarkovChain.generate_next_sample">
+<span class="sig-name descname"><span class="pre">generate_next_sample</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.sampling.MarkovChain.generate_next_sample" title="Permalink to this definition"></a></dt>
+<dd><p>Adds a new sample to the chain.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="timeseries_qmc.sampling.MarkovChain.generated_samples_count">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generated_samples_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#timeseries_qmc.sampling.MarkovChain.generated_samples_count" title="Permalink to this definition"></a></dt>
+<dd><p>Total number of samples generated sofar.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.sampling.MarkovChain.get_boltzmann_weights">
+<span class="sig-name descname"><span class="pre">get_boltzmann_weights</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.sampling.MarkovChain.get_boltzmann_weights" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the Boltzmann weights for all samples of the chain.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>values</strong> – List of numbers represnting the Boltzmann weights.
+The elements are ordered by their generation time.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.sampling.MarkovChain.get_local_energies">
+<span class="sig-name descname"><span class="pre">get_local_energies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.sampling.MarkovChain.get_local_energies" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the local energies for all samples of the chain.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>values</strong> – List of numbers represnting the local energies.
+The elements are ordered by their generation time.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.sampling.MarkovChain.get_local_energies_squared">
+<span class="sig-name descname"><span class="pre">get_local_energies_squared</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.sampling.MarkovChain.get_local_energies_squared" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the second moment of local energies for all samples of the chain.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>values</strong> – List of numbers represnting the second moment of local energies.
+The elements are ordered by their generation time.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.sampling.MarkovChain.get_magnetziations_squared">
+<span class="sig-name descname"><span class="pre">get_magnetziations_squared</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a></span></span><a class="headerlink" href="#timeseries_qmc.sampling.MarkovChain.get_magnetziations_squared" title="Permalink to this definition"></a></dt>
+<dd><p>Calculates the squared magnetization for all samples of the chain.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>values</strong> – List of numbers represnting the squared magnetizations.
+The elements are ordered by their generation time.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.sampling.MarkovChain.get_samples">
+<span class="sig-name descname"><span class="pre">get_samples</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a></span></span><a class="headerlink" href="#timeseries_qmc.sampling.MarkovChain.get_samples" title="Permalink to this definition"></a></dt>
+<dd><p>Gets a copy of all samples of the chain.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>samples</strong> – List of bitstrings of zeros and ones representing the generated product states.
+The elements are ordered by their generation time.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.sampling.MarkovChain.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.sampling.MarkovChain.load" title="Permalink to this definition"></a></dt>
+<dd><p>Load a chain of samples from file. It overwrites the content of the chain with the loaded one.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.sampling.MarkovChain.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.sampling.MarkovChain.save" title="Permalink to this definition"></a></dt>
+<dd><p>Save a chain of samples to a file. It creates parent directories if necessary.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="timeseries_qmc.sampling.Sampler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">timeseries_qmc.sampling.</span></span><span class="sig-name descname"><span class="pre">Sampler</span></span><a class="headerlink" href="#timeseries_qmc.sampling.Sampler" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
+<p>Abstract base class for sampling quantum states.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.sampling.Sampler.propose_sample">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">propose_sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old_sample_bitstring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/1.22/reference/random/legacy.html#numpy.random.RandomState" title="(in NumPy v1.22)"><span class="pre">RandomState</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.sampling.Sampler.propose_sample" title="Permalink to this definition"></a></dt>
+<dd><p>Proposes a new random sample based on the old one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>old_sample_bitstring</strong> (list or <a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – List/array of zeros and ones representing old product state <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>.</p></li>
+<li><p><strong>rng</strong> (<a class="reference external" href="https://numpy.org/doc/1.22/reference/random/legacy.html#numpy.random.RandomState" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.random.RandomState</span></code></a>) – Random number generator.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>new_sample_bitstring</strong> (<a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – List/array of zeros and ones representing new product state  <span class="math notranslate nohighlight">\(\psi^\prime\)</span>.</p></li>
+<li><p><strong>proposal_ratio</strong> (<em>float</em>) – Ratio of proposal probabilities <span class="math notranslate nohighlight">\(\frac{p(\psi^\prime \to \psi)}{p(\psi \to \psi^\prime )}\)</span></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="timeseries_qmc.sampling.SingleFlip">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">timeseries_qmc.sampling.</span></span><span class="sig-name descname"><span class="pre">SingleFlip</span></span><a class="headerlink" href="#timeseries_qmc.sampling.SingleFlip" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#timeseries_qmc.sampling.Sampler" title="timeseries_qmc.sampling._sampler.Sampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sampler</span></code></a></p>
+<p>Sampler of spin product states using single spin flips.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="timeseries_qmc.sampling.SingleFlip.propose_sample">
+<span class="sig-name descname"><span class="pre">propose_sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old_sample</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/1.22/reference/random/legacy.html#numpy.random.RandomState" title="(in NumPy v1.22)"><span class="pre">RandomState</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.sampling.SingleFlip.propose_sample" title="Permalink to this definition"></a></dt>
+<dd><p>Inherited method. See <a class="reference internal" href="#timeseries_qmc.sampling.Sampler.propose_sample" title="timeseries_qmc.sampling.Sampler.propose_sample"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Sampler.propose_sample()</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="timeseries_qmc.sampling.generate_chain">
+<span class="sig-prename descclassname"><span class="pre">timeseries_qmc.sampling.</span></span><span class="sig-name descname"><span class="pre">generate_chain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">boltzmann_weight_calculator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="timeseries_qmc.boltzmann.html#timeseries_qmc.boltzmann.BoltzmannWeightCalculator" title="timeseries_qmc.boltzmann._calculator.BoltzmannWeightCalculator"><span class="pre">BoltzmannWeightCalculator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#timeseries_qmc.sampling.Sampler" title="timeseries_qmc.sampling._sampler.Sampler"><span class="pre">Sampler</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">inital_sample_bitstring</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">chain_file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#timeseries_qmc.sampling.generate_chain" title="Permalink to this definition"></a></dt>
+<dd><p>Generate a Markov chain with a specified number of samples.</p>
+<p>If parameter <strong>chain_file_path</strong> is supplied, the chain is attempted to be loaded from the file and the sampling
+continues till the specified number of samples is reached. Also the chain is saved after each sample is generated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>boltzmann_weight_calculator</strong> (<a class="reference internal" href="timeseries_qmc.boltzmann.html#timeseries_qmc.boltzmann.BoltzmannWeightCalculator" title="timeseries_qmc.boltzmann.BoltzmannWeightCalculator"><code class="xref py py-class docutils literal notranslate"><span class="pre">boltzmann.BoltzmannWeightCalculator</span></code></a>) – Calculator of Boltzmann weights.</p></li>
+<li><p><strong>sampler</strong> (<a class="reference internal" href="#timeseries_qmc.sampling.Sampler" title="timeseries_qmc.sampling.Sampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sampler</span></code></a>) – Sampler of quantum states.</p></li>
+<li><p><strong>initia_sample_bitstring</strong> (list or <a class="reference external" href="https://numpy.org/doc/1.22/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – List/array of zeros and ones representing initial product state.</p></li>
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Seed for the random number generator.</p></li>
+<li><p><strong>num_samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of samples in the chain.</p></li>
+<li><p><strong>chain_file_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Path of the file used to store/retrieve the chain data.
+Value <code class="docutils literal notranslate"><span class="pre">None</span></code> can be used to avoid storing/retreiving data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>chain</strong> – Markov chain with the specified number of samples.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#timeseries_qmc.sampling.MarkovChain" title="timeseries_qmc.sampling.MarkovChain">MarkovChain</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="timeseries_qmc.models.html" class="btn btn-neutral float-left" title="timeseries_qmc.models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="timeseries_qmc.utils.html" class="btn btn-neutral float-right" title="timeseries_qmc.utils" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Quantinuum GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

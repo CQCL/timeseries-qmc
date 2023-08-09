@@ -1,5 +1,5 @@
 # Sphinx documentation
-docs/_build/
+# docs/_build/
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -14,7 +14,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-build/
+/build/
 develop-eggs/
 dist/
 downloads/

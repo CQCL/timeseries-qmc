@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installation &mdash; TimeseriesQMC 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/jupyter-sphinx.css" type="text/css" />
+      <link rel="stylesheet" href="_static/thebelab.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script src="_static/thebelab-helper.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial" href="tutorial.html" />
+    <link rel="prev" title="Welcome to TimeseriesQMC’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            TimeseriesQMC
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installing-quspin-via-anoaconda">Installing QuSpin via Anoaconda</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">TimeseriesQMC</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Installation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/install.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h1>
+<p>The timeseries-qmc package depends on the following packages:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://numpy.org/">numpy</a></p></li>
+<li><p><a class="reference external" href="https://scipy.org/">scipy</a></p></li>
+<li><p><a class="reference external" href="https://cqcl.github.io/tket/pytket/api/">pytket</a></p></li>
+<li><p><a class="reference external" href="https://cqcl.github.io/pytket-qiskit/api/index.html">pytket-qiskit</a></p></li>
+<li><p><a class="reference external" href="https://tenpy.readthedocs.io/en/latest/">physics-tenpy</a></p></li>
+<li><p><a class="reference external" href="https://quspin.github.io/QuSpin/index.html">quspin</a></p></li>
+</ul>
+<p>The timeseries-qmc package and all its dependencies, except <strong>quspin</strong>, are avaiable via pip and will be
+installed automatically by executing the following command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>timeseries-qmc
+</pre></div>
+</div>
+<p>quspin needs to be installed seperately, either manually or via Anaconda.
+For details on how to intall it, please refere to its <a class="reference external" href="https://quspin.github.io/QuSpin/Installation.html">installation guide</a>
+after reading the following section.</p>
+<section id="installing-quspin-via-anoaconda">
+<h2>Installing QuSpin via Anoaconda<a class="headerlink" href="#installing-quspin-via-anoaconda" title="Permalink to this heading"></a></h2>
+<p>It is known that pip and conda do not play well together (see
+this <a class="reference external" href="https://www.anaconda.com/blog/using-pip-in-a-conda-environment">page</a> on the topic of using pip in conda
+enviroments).
+Therefore, it is recommonded to install quspin  manually.
+However, installing a package manually can be cumbersome and you may still opt for installing quspin via Anaconda.
+In that case, it is recommonded to first setup a new conda environment,
+install all conda packages (including quspin), and then install all pip packages (including timeseries-qmc).
+The following is a minimal example:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>myenv<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.9
+conda<span class="w"> </span>activate<span class="w"> </span>myenv
+conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>weinbe58<span class="w"> </span>quspin
+pip<span class="w"> </span>install<span class="w"> </span>timeseries-qmc
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to TimeseriesQMC’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tutorial.html" class="btn btn-neutral float-right" title="Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Quantinuum GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
