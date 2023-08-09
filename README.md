@@ -17,16 +17,20 @@ pip install timeseries-qmc
 ```
 
 This automatically installs all the dependecies except for [QuSpin](https://quspin.github.io/QuSpin/index.html).
-For instructions on the best practice for installing QuSpin alongside other pip packages check our [installation guide]().
+For instructions on the best practice for installing QuSpin alongside other pip packages check our 
+[installation guide](https://cqcl.github.io/timeseries-qmc/build/html/install.html).
 
 
-Full documentation of the **timeseries-qmc** package can be found at [link]().
-It includes an [API reference](), [examples]() and a [tutorial]() for a quick introduction on how to use the library.
+Full documentation of the **timeseries-qmc** package can be found 
+[here](https://cqcl.github.io/timeseries-qmc/build/html/index.html).
+It includes an [API reference](https://cqcl.github.io/timeseries-qmc/build/html/api.html), 
+[examples](https://cqcl.github.io/timeseries-qmc/build/html/examples.html) and a 
+[tutorial](https://cqcl.github.io/timeseries-qmc/build/html/tutorial.html) for a quick introduction on how to use the library.
 
 ## How to cite
 
 If you use this library for a work published in an academic journal, we apperciate citing 
-[this paper](https://arxiv.org/abs/2305.19322) to acknowledge the work put into the development.
+[this paper](https://arxiv.org/abs/2305.19322) to acknowledge the effort put into the development.
 
 ## Acknowledgment
 
