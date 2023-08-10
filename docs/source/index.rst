@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to TimeseriesQMC's documentation!
-*****************************************
+TimeseriesQMC Documentation
+***************************
 This is a python library for running and testing the time-seriers quantum Monte Carlo algorithm of model Hamiltonians.
 Time-series quantum Monte Carlo is a hybrid classical-quantum algorithm for evaluting finite-temperature obervables 
 by sampling easily preparable states and estimating their thermal weights from real-time dynamics simulated on a quantum
